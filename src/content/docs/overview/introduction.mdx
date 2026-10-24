@@ -23,56 +23,102 @@ Ransomware can affect individuals, businesses, and critical services. Successful
 
 ## Ransomware Behaviour and Consequences
 
-Ransomware execution may involve several related behaviors, including initial access, execution, persistence, system and account discovery, privilege escalation, lateral movement, data collection or exfiltration, recovery inhibition, and file encryption. The exact sequence depends on the malware family, the targeted environment, and the attacker's objectives.
+Ransomware execution may involve several behaviors, including initial access, execution, persistence, system discovery, privilege escalation, lateral movement, data exfiltration, and file encryption. The exact sequence varies depending on the ransomware family and the attacker's objectives.
 
-One important behavior is inhibiting system recovery. Some ransomware operators delete volume shadow copies, disable recovery services, or remove accessible backups to make restoration more difficult. MITRE ATT&CK classifies this behavior under **Inhibit System Recovery (T1490)** [3]. Other ransomware behaviors involve encrypting files on local or remote systems to interrupt access to important resources, as described by **Data Encrypted for Impact (T1486)** [2].
+**Examples of ransomware behavior include:**
 
-The consequences extend beyond file encryption. Organizations may experience service interruptions, loss of access to operational data, exposure of confidential information, and prolonged recovery efforts. Lateral movement can also allow attackers to reach additional systems, increasing the scope of an incident.
+- **Inhibiting system recovery:** Some ransomware operators delete volume shadow copies, disable recovery services, or remove accessible backups to make restoration more difficult. MITRE ATT&CK classifies this behavior under *Inhibit System Recovery* (T1490) [3].
+- **Encrypting data:** Ransomware may encrypt files on local or remote systems to prevent users from accessing important resources. MITRE ATT&CK documents this behavior under *Data Encrypted for Impact* (T1486) [2].
+- **Lateral movement:** Attackers may move from an initially compromised system to other systems within a network, potentially increasing the scope of the incident.
+- **Data exfiltration:** Some ransomware campaigns steal sensitive information before encryption and threaten to disclose it to increase pressure on the victim.
 
-Understanding these behaviors is important because different defensive mechanisms address different stages or aspects of an attack. A defense that detects suspicious process activity, for example, may not directly prevent file encryption or protect recovery infrastructure. This motivates the systematic evaluation of defenses against specific observed behaviors.
+These behaviors can cause operational disruption, loss of access to critical data, exposure of confidential information, financial losses, and prolonged recovery efforts. Understanding individual behaviors is important because different defensive mechanisms address different attack actions. A defense that detects suspicious process activity, for example, may not directly prevent file encryption or protect backup infrastructure. This motivates the systematic evaluation of defenses against specific observed behaviors.
 
 ### Ransomware Execution Lifecycle
 
 <WorkflowDiagram 
   title="Ransomware Multi-Stage Execution Lifecycle" 
   figureNumber="Figure 1.1"
-  status="Standard Threat Model"
+  status="Generalized Ransomware Lifecycle"
   caption="Generalized representation of ransomware-related behaviors. Not every ransomware incident follows this exact sequence, and some stages may be absent or occur in a different order."
 >
-  <div style="width: 100%; max-width: 820px; padding: 1.5rem 0.5rem; display: flex; flex-direction: column; gap: 1rem;">
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.825rem;">
-      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+  <div class="lifecycle-flow-wrapper">
+    {/* Stage 1 to Stage 4 */}
+    <div class="lifecycle-flow-row">
+      <div class="lifecycle-flow-card row-1">
         1. Initial Access
       </div>
-      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
-      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+      <div class="lifecycle-flow-arrow" title="Next stage">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <polyline points="13 5 20 12 13 19"></polyline>
+        </svg>
+      </div>
+      <div class="lifecycle-flow-card row-1">
         2. Execution &amp; Persistence
       </div>
-      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
-      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+      <div class="lifecycle-flow-arrow" title="Next stage">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <polyline points="13 5 20 12 13 19"></polyline>
+        </svg>
+      </div>
+      <div class="lifecycle-flow-card row-1">
         3. Discovery &amp; Privilege Escalation
       </div>
-      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
-      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+      <div class="lifecycle-flow-arrow" title="Next stage">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <polyline points="13 5 20 12 13 19"></polyline>
+        </svg>
+      </div>
+      <div class="lifecycle-flow-card row-1">
         4. Lateral Movement
       </div>
     </div>
 
-    <div style="display: flex; justify-content: center; color: var(--sl-color-accent); font-size: 1.25rem; font-weight: bold;">↓</div>
+    {/* Connected transition from Stage 4 (right) down and across to Stage 5 (left) */}
+    <div class="lifecycle-connector-container" aria-hidden="true">
+      <svg width="100%" height="32" viewBox="0 0 1000 32" preserveAspectRatio="none" style="overflow: visible;">
+        <defs>
+          <marker id="flow-arrow-down" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 1 L 9 5 L 0 9 z" fill="var(--sl-color-accent)" />
+          </marker>
+        </defs>
+        <path 
+          d="M 875 0 V 10 Q 875 16 865 16 H 177 Q 167 16 167 22 V 30" 
+          fill="none" 
+          stroke="var(--sl-color-accent)" 
+          stroke-width="2" 
+          marker-end="url(#flow-arrow-down)" 
+        />
+        <polygon points="522,12 512,16 522,20" fill="var(--sl-color-accent)" />
+      </svg>
+    </div>
 
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.825rem;">
-      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+    {/* Stage 5 to Stage 7 */}
+    <div class="lifecycle-flow-row">
+      <div class="lifecycle-flow-card row-2">
         5. Data Collection / Exfiltration
       </div>
-      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
-      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
-        6. Recovery Inhibition
-        <div style="font-size: 0.725rem; color: var(--sl-color-tech); font-weight: normal;">(T1490)</div>
+      <div class="lifecycle-flow-arrow" title="Next stage">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <polyline points="13 5 20 12 13 19"></polyline>
+        </svg>
       </div>
-      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
-      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--sl-color-accent); border-radius: 6px; background: var(--sl-color-accent-low); text-align: center; font-weight: 600; color: var(--sl-color-accent);">
-        7. Data Encryption &amp; Extortion
-        <div style="font-size: 0.725rem; color: var(--sl-color-accent); font-weight: normal;">(T1486)</div>
+      <div class="lifecycle-flow-card row-2">
+        6. Recovery Inhibition
+      </div>
+      <div class="lifecycle-flow-arrow" title="Next stage">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <polyline points="13 5 20 12 13 19"></polyline>
+        </svg>
+      </div>
+      <div class="lifecycle-flow-card row-2 highlight">
+        7. Data Encrypted for Impact (T1486)
+        <div class="lifecycle-card-subtitle">Often followed by ransom demands.</div>
       </div>
     </div>
   </div>
