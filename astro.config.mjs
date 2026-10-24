@@ -54,21 +54,11 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Group D — Experiments & Results',
+          label: 'Group D — Discussion & Resources',
           items: [
-            { label: '16. Experimental Setup', slug: 'experiments/setup' },
-            { label: '17. LLM Evaluation', slug: 'experiments/llm-evaluation' },
-            { label: '18. CCEA Evaluation', slug: 'experiments/ccea-evaluation' },
-            { label: '19. BeagleBoyz/HOPLIGHT Case Study', slug: 'experiments/hoplight-case-study' },
-            { label: '20. Implementation Status', slug: 'experiments/implementation-status' },
-          ],
-        },
-        {
-          label: 'Group E — Discussion & Resources',
-          items: [
-            { label: '21. Limitations & Future Work', slug: 'resources/limitations-future-work' },
-            { label: '22. References & Technical Resources', slug: 'resources/references' },
-            { label: '23. Team & Project Information', slug: 'resources/project-team' },
+            { label: '16. Limitations & Future Work', slug: 'resources/limitations-future-work' },
+            { label: '17. References & Technical Resources', slug: 'resources/references' },
+            { label: '18. Team & Project Information', slug: 'resources/project-team' },
           ],
         },
       ],
