@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node -e \"const fs=require('fs'); fs.cpSync('dist/pagefind', 'public/pagefind', {recursive: true, force: true});\"",
     "preview": "astro preview",
     "astro": "astro"
   },

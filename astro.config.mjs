@@ -17,6 +17,7 @@ export default defineConfig({
       ],
       components: {
         Footer: './src/components/CustomFooter.astro',
+        Search: './src/components/Search.astro',
       },
       tableOfContents: {
         minHeadingLevel: 2,
