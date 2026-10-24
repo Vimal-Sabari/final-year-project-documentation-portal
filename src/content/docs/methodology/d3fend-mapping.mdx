@@ -4,7 +4,6 @@ description: "Ontological mapping bridging adversarial ATT&CK techniques to defe
 ---
 
 import PageIntro from '../../../components/PageIntro.astro';
-import WorkflowDiagram from '../../../components/WorkflowDiagram.astro';
 import ReferenceItem from '../../../components/ReferenceItem.astro';
 
 <PageIntro 
@@ -123,102 +122,6 @@ For the project, the mapping data preserve the exact relationship label and arti
 > - **Mitigation assessment:** Determines whether and to what extent that defensive action affects a particular attack behavior.
 > 
 > *For example, System Call Filtering is related to both processes and system calls. Whether it reduces the effectiveness of a particular memory-manipulation behavior depends on the filtering policy and the relevant operations. The relationship alone does not establish that all such operations are blocked.*
-
----
-
-## Figure 3.6: ATT&CK–D3FEND Attack–Defense Mapping
-
-<WorkflowDiagram 
-  title="ATT&CK–D3FEND Attack–Defense Mapping and Evaluation Workflow" 
-  figureNumber="Figure 3.6"
-  status="Knowledge Pipeline"
-  caption="Workflow connecting observed malicious behavior with ATT&CK technique classification, candidate D3FEND defensive mechanisms, defense–artifact relationships, and downstream residual-severity assessment."
->
-  <div style="width: 100%; max-width: 900px; padding: 1.5rem 0.5rem; display: flex; justify-content: center;">
-    <svg viewBox="0 0 920 310" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
-      <defs>
-        <marker id="d3-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--sl-color-accent)" />
-        </marker>
-        <marker id="d3-tech-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--sl-color-tech)" />
-        </marker>
-        <marker id="d3-purple-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--sl-color-purple)" />
-        </marker>
-      </defs>
-
-      {/* Row 1: 4 Cards */}
-      {/* 1. Observed Behavioral Signature */}
-      <rect x="15" y="25" width="205" height="95" rx="8" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
-      <text x="25" y="45" fill="var(--sl-color-accent)" font-size="10" font-weight="700">INPUT EVIDENCE</text>
-      <text x="25" y="70" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Observed Signature</text>
-      <text x="25" y="90" fill="var(--sl-color-gray-4)" font-size="10">Cuckoo dynamic telemetry</text>
-      <text x="25" y="105" fill="var(--sl-color-gray-4)" font-size="10">&amp; API indicators</text>
-
-      {/* Arrow 1 -> 2 */}
-      <line x1="220" y1="72" x2="245" y2="72" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#d3-arrow)" />
-
-      {/* 2. MITRE ATT&CK Technique */}
-      <rect x="250" y="25" width="205" height="95" rx="8" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
-      <text x="260" y="45" fill="var(--sl-color-tech)" font-size="10" font-weight="700">ATTACK TAXONOMY</text>
-      <text x="260" y="70" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">MITRE ATT&amp;CK Technique</text>
-      <text x="260" y="90" fill="var(--sl-color-gray-4)" font-size="10">Standardized TTP ID</text>
-      <text x="260" y="105" fill="var(--sl-color-gray-4)" font-size="10">(e.g., T1486, T1490)</text>
-
-      {/* Arrow 2 -> 3 */}
-      <line x1="455" y1="72" x2="480" y2="72" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#d3-arrow)" />
-
-      {/* 3. ATT&CK Mitigation Mapping */}
-      <rect x="485" y="25" width="205" height="95" rx="8" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
-      <text x="495" y="45" fill="var(--sl-color-purple)" font-size="10" font-weight="700">CROSSWALK BRIDGE</text>
-      <text x="495" y="70" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Mitigation Mapping</text>
-      <text x="495" y="90" fill="var(--sl-color-gray-4)" font-size="10">ATT&amp;CK mitigation crosswalk</text>
-      <text x="495" y="105" fill="var(--sl-color-gray-4)" font-size="10">to D3FEND countermeasures</text>
-
-      {/* Arrow 3 -> 4 */}
-      <line x1="690" y1="72" x2="715" y2="72" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#d3-arrow)" />
-
-      {/* 4. Candidate D3FEND Defenses */}
-      <rect x="720" y="25" width="185" height="95" rx="8" fill="var(--academic-card-bg)" stroke="var(--sl-color-accent)" stroke-width="1.5" />
-      <text x="730" y="45" fill="var(--sl-color-accent)" font-size="10" font-weight="700">DEFENSIVE POOL</text>
-      <text x="730" y="70" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Candidate Defenses</text>
-      <text x="730" y="90" fill="var(--sl-color-gray-4)" font-size="10">Canonical D3FEND IDs</text>
-      <text x="730" y="105" fill="var(--sl-color-gray-4)" font-size="10">(e.g., D3-SCF, D3-PSA)</text>
-
-      {/* Turn Arrow from Card 4 down to Card 5 */}
-      <path d="M 812 120 L 812 155 L 750 155 L 750 180" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#d3-arrow)" />
-
-      {/* Row 2: 3 Cards */}
-      {/* 5. D3FEND Defense–Artifact Relationships */}
-      <rect x="590" y="185" width="315" height="95" rx="8" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
-      <text x="605" y="205" fill="var(--sl-color-orange)" font-size="10" font-weight="700">ONTOLOGICAL RELATIONSHIPS</text>
-      <text x="605" y="230" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Defense–Artifact Mappings</text>
-      <text x="605" y="250" fill="var(--sl-color-gray-4)" font-size="10">Explicit relationships: <code>filters</code>, <code>isolates</code>, <code>hardens</code></text>
-      <text x="605" y="265" fill="var(--sl-color-gray-4)" font-size="10">Target artifacts: System Call, Process, Password</text>
-
-      {/* Arrow 5 -> 6 */}
-      <line x1="590" y1="232" x2="540" y2="232" stroke="var(--sl-color-purple)" stroke-width="2" marker-end="url(#d3-purple-arrow)" />
-
-      {/* 6. LLM-Based Residual-Severity Assessment */}
-      <rect x="290" y="185" width="245" height="95" rx="8" fill="var(--academic-card-bg)" stroke="var(--sl-color-purple)" stroke-width="1.5" />
-      <text x="305" y="205" fill="var(--sl-color-purple)" font-size="10" font-weight="700">SEVERITY EVALUATION</text>
-      <text x="305" y="230" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">LLM Residual-Severity</text>
-      <text x="305" y="250" fill="var(--sl-color-gray-4)" font-size="10">Contextual evaluation of defense</text>
-      <text x="305" y="265" fill="var(--sl-color-gray-4)" font-size="10">against observed attack behavior</text>
-
-      {/* Arrow 6 -> 7 */}
-      <line x1="290" y1="232" x2="240" y2="232" stroke="var(--sl-color-tech)" stroke-width="2" marker-end="url(#d3-tech-arrow)" />
-
-      {/* 7. CCEA Defense Optimization */}
-      <rect x="15" y="185" width="220" height="95" rx="8" fill="var(--academic-card-bg)" stroke="var(--sl-color-tech)" stroke-width="1.8" />
-      <text x="30" y="205" fill="var(--sl-color-tech)" font-size="10" font-weight="700">OPTIMIZATION ENGINE</text>
-      <text x="30" y="230" fill="var(--sl-color-tech)" font-size="12" font-weight="700">CCEA Defense Selection</text>
-      <text x="30" y="250" fill="var(--sl-color-gray-3)" font-size="10">Evolutionary search for effective</text>
-      <text x="30" y="265" fill="var(--sl-color-gray-3)" font-size="10">countermeasure combinations</text>
-    </svg>
-  </div>
-</WorkflowDiagram>
 
 ---
 
