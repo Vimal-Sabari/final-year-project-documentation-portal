@@ -4,7 +4,6 @@ description: "Connecting behavioral signatures extracted from dynamic Cuckoo ana
 ---
 
 import PageIntro from '../../../components/PageIntro.astro';
-import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
 import ReferenceItem from '../../../components/ReferenceItem.astro';
 
 <PageIntro 
@@ -121,21 +120,6 @@ The following examples demonstrate how observed behavior can be associated with 
 
 > [!NOTE]
 > **Resolution Criteria:** The mappings are based on the behavior described, not merely on the presence of an API or a signature name. If the collected evidence is insufficient to distinguish a technique from other possible explanations, the mapping should remain unresolved or be marked for review.
-
----
-
-## Figure 3.5: ATT&CK Technique Coverage Across Evaluated Samples
-
-The planned coverage chart will summarize the ATT&CK techniques identified in the actual evaluation dataset. It may show the number of samples associated with each technique or the distribution of mapped techniques across ATT&CK tactics.
-
-<FigurePlaceholder 
-  figureId="3.5" 
-  title="ATT&CK Technique Coverage Across Evaluated Samples" 
-  caption="The planned coverage chart will summarize the ATT&CK techniques identified in the evaluation dataset. The chart will be generated directly from recorded mappings without extrapolating unobserved behaviors."
-/>
-
-> [!IMPORTANT]
-> **Integrity Requirement:** The chart should be generated from the project's recorded mappings. It should not imply that a technique was detected in samples for which no supporting evidence exists.
 
 ---
 
