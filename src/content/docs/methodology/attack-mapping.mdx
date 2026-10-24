@@ -1,0 +1,82 @@
+---
+title: "MITRE ATT&CK TTP Mapping"
+description: "Algorithmic correlation of extracted behavioral signatures to MITRE ATT&CK tactics, techniques, and sub-techniques."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+import DataTable from '../../../components/DataTable.astro';
+import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
+
+<PageIntro 
+  subtitle="Formalized methodology for aligning runtime behavioral indicators against MITRE ATT&CK enterprise adversary techniques." 
+  note="Research content will be added. Mapping table schema and figure placeholders are staged below without fabricated research data."
+/>
+
+## Tactics, Techniques, and Sub-Techniques
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Structural taxonomy of MITRE ATT&CK Enterprise Matrix v14/v15 relevant to ransomware execution lifecycles.</div>
+</div>
+
+*Content to be supplied: Detailed hierarchy linking Tactics (TA0005 Defense Evasion, TA0040 Impact, etc.) to specific Techniques (T1486 Data Encrypted for Impact, T1490 Inhibit System Recovery) and Sub-techniques.*
+
+## Behaviour-to-Technique Mapping
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Algorithmic heuristics and rule-based inference models correlating atomic API calls to ATT&CK technique IDs.</div>
+</div>
+
+*Content to be supplied: Formal correlation matrix formulation mapping signature attribute vectors to technique nodes.*
+
+## Mapping Evidence
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Evidentiary requirements, confidence weighting formulas, and threshold constraints necessary to validate an ATT&CK mapping.</div>
+</div>
+
+*Content to be supplied: Evidence validation criteria (command-line parameters, registry keys touched, process tree lineage).*
+
+## Example Mapping
+
+Below is the planned mapping schema correlating behavioral telemetry to formal ATT&CK classifications:
+
+<DataTable 
+  headers={["Signature ID", "Extracted Behavior", "ATT&CK Technique", "Tactic", "Evidence Weight"]}
+  caption="Table 3.2: Formal alignment schema between dynamic behavioral signatures and ATT&CK techniques (Research data to be inserted)."
+>
+  <tr>
+    <td><code>SIG_REC_01</code></td>
+    <td>Deletion of Volume Shadow Copies via VSSAdmin</td>
+    <td><strong>T1490: Inhibit System Recovery</strong></td>
+    <td>Impact</td>
+    <td><code>[Weight to be inserted]</code></td>
+  </tr>
+  <tr>
+    <td><code>SIG_ENC_02</code></td>
+    <td>Mass file traversal with cryptographically random write buffers</td>
+    <td><strong>T1486: Data Encrypted for Impact</strong></td>
+    <td>Impact</td>
+    <td><code>[Weight to be inserted]</code></td>
+  </tr>
+  <tr>
+    <td><code>SIG_EVA_03</code></td>
+    <td>Process hollowing via <code>NtUnmapViewOfSection</code></td>
+    <td><strong>T1055.012: Process Hollowing</strong></td>
+    <td>Defense Evasion / Privilege Escalation</td>
+    <td><code>[Weight to be inserted]</code></td>
+  </tr>
+</DataTable>
+
+<FigurePlaceholder 
+  figureId="3.5" 
+  title="ATT&CK Ontological Coverage Matrix" 
+  caption="Coverage heatmap across MITRE ATT&CK matrix tactics for evaluated ransomware sample families."
+/>
+
+## Limitations
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Methodological limitations including multi-technique ambiguity, coarse-grained technique definitions, and unseen evasion variations.</div>
+</div>
+
+*Content to be supplied: Critical discussion on mapping uncertainties and confidence attenuation.*

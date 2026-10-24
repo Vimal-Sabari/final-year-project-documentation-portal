@@ -1,0 +1,47 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+---
+
+<Default {...Astro.props}>
+  <slot />
+</Default>
+
+<div class="academic-portal-footer">
+  <div class="academic-portal-footer-grid">
+    <div>
+      <div class="footer-section-title">Research Project</div>
+      <div class="footer-section-content">
+        <strong>An Evolutionary Framework for Ransomware Defense Optimization</strong>
+        <p style="margin: 0.35rem 0 0 0; color: var(--sl-color-gray-3);">
+          A formal cybersecurity research and engineering documentation portal for evolutionary defense optimization against evasive ransomware.
+        </p>
+      </div>
+    </div>
+    
+    <div>
+      <div class="footer-section-title">Academic Details</div>
+      <div class="footer-section-content">
+        <p style="margin: 0 0 0.25rem 0;"><strong>Institution:</strong> Amrita Vishwa Vidyapeetham, Coimbatore</p>
+        <p style="margin: 0 0 0.25rem 0;"><strong>Department:</strong> Computer Science and Engineering</p>
+        <p style="margin: 0 0 0.25rem 0;"><strong>Research Cluster:</strong> Knowledge Engineering and Semantic Computing</p>
+        <p style="margin: 0 0 0.25rem 0;"><strong>Team Identifier:</strong> Team 42</p>
+        <p style="margin: 0 0 0.25rem 0;"><strong>Guide:</strong> Ms. Rohini S (Asst. Prof, Dept. of CSE)</p>
+        <p style="margin: 0 0 0.25rem 0;"><strong>Co-Guide:</strong> Dr. Gowtham R (Assoc. Prof, Dept. of CSE)</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-section-title">Project Resources</div>
+      <div class="footer-section-content">
+        <p style="margin: 0 0 0.25rem 0;"><strong>Repository:</strong> [Repository link to be supplied]</p>
+        <p style="margin: 0 0 0.25rem 0;"><strong>Documentation Version:</strong> Initial Academic Portal Scaffold (v0.1.0)</p>
+        <p style="margin: 0 0 0.25rem 0;"><strong>Status:</strong> Structure and navigation established</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom-bar">
+    <span>© Academic Research Documentation Portal. Strictly for academic submission & peer review.</span>
+    <span>Last updated: Academic Year 2026</span>
+  </div>
+</div>

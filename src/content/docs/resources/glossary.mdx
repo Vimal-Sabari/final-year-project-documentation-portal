@@ -1,0 +1,28 @@
+---
+title: "Glossary of Technical Terms"
+description: "Comprehensive terminology definitions across dynamic malware analysis, ATT&CK, D3FEND, and evolutionary algorithms."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+
+<PageIntro 
+  subtitle="Formal academic definitions of technical concepts and acronyms utilized across the evolutionary ransomware defense framework." 
+  note="Optional supporting page. Terms will be expanded as research documentation evolves."
+/>
+
+## Cybersecurity & Malware Analysis
+
+- **API Unhooking:** A defense evasion technique where malware restores clean system DLL code from disk into memory to remove EDR user-mode hooks.
+- **Dynamic Detonation:** Executing suspicious binaries inside an isolated, instrumented sandbox to observe runtime behavior without host compromise.
+- **Process Hollowing:** An evasion technique where a benign process is spawned in a suspended state, its memory unmapped, and replaced with malicious payload code.
+- **Volume Shadow Copies:** Windows backup snapshots frequently deleted by ransomware via `vssadmin` or `WMI` to prevent system restoration.
+
+## Ontological Frameworks
+
+- **MITRE ATT&CK:** Adversarial Tactics, Techniques, and Common Knowledge; a curated knowledge base of cyber adversary behavior based on real-world observations.
+- **MITRE D3FEND:** A formal ontology and matrix of defensive cybersecurity countermeasures and their technical relationships to digital artifacts.
+
+## Optimization & Evolutionary Computation
+
+- **Cooperative Co-Evolutionary Algorithm (CCEA):** An evolutionary architecture where multiple subpopulations evolve symbiotically, with individual fitness evaluated through cooperation or competition with members of other subpopulations.
+- **Pareto Optimality:** A state of multi-objective allocation where no individual criterion can be improved without degrading at least one other criterion.

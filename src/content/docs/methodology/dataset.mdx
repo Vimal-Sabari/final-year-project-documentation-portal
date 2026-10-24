@@ -1,0 +1,100 @@
+---
+title: "Dataset Construction"
+description: "Empirical ransomware dataset curation, validation, deduplication, feature extraction, and cohort criteria."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+import DataTable from '../../../components/DataTable.astro';
+import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
+
+<PageIntro 
+  subtitle="Rigorous curation methodology, binary verification, deduplication, and feature extraction across ransomware sample cohorts." 
+  note="Research content will be added. Placeholders for empirical statistics and distribution charts are staged without fabricated values."
+/>
+
+## Dataset Sources
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Repositories and academic threat sharing platforms providing confirmed ransomware binaries and benign executables.</div>
+</div>
+
+*Content to be supplied: Provenance documentation for public repositories (MalwareBazaar, VirusShare, VirusTotal) and research corpus acquisitions.*
+
+## Sample Validation and Deduplication
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Cryptographic hashing (SHA-256), ssdeep fuzzy hashing, PE header inspection, and execution validation protocols.</div>
+</div>
+
+*Content to be supplied: Multi-stage deduplication pipeline ensuring identical binary packers and polymorphic permutations are appropriately grouped or filtered.*
+
+## Malware Classification
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Multi-engine AV consensus labelling (AVClass / AVClass2), family attribution, and threat group correlation.</div>
+</div>
+
+*Content to be supplied: Family labeling methodology, handling ambiguous detections, and establishing ground-truth taxonomic classes.*
+
+## Metadata and Data Fields
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Formal schema of extracted binary and execution metadata attributes.</div>
+</div>
+
+*Content to be supplied: Specification of metadata fields (sample hash, file size, compile timestamp, packer status, entropy score, API call frequency).*
+
+## Inclusion and Exclusion Criteria
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Objective criteria for accepting active ransomware samples and disqualifying corrupt or non-functional binaries.</div>
+</div>
+
+- **Inclusion Criteria:** Verified execution within target Windows OS, demonstrated filesystem modification or encryption attempts, confirmed cryptographic hash provenance.
+- **Exclusion Criteria:** Corrupt PE headers, immediate crash/unhandled exception without API activity, non-functional command-and-control dependencies that prevent execution.
+
+## Dataset Statistics
+
+<div class="academic-placeholder-banner">
+  <div><strong>Notice:</strong> Empirical metrics and cohort distribution tables will be populated upon completion of sample curation. Fabricated numbers are omitted.</div>
+</div>
+
+<DataTable 
+  headers={["Malware Family", "Sample Count", "Execution Success Rate", "Average Behavioral Signatures", "Target Architectures"]}
+  caption="Table 3.1: Dataset distribution across primary ransomware families and benign control sets (Empirical metrics to be inserted)."
+>
+  <tr>
+    <td><strong>LockBit Family</strong></td>
+    <td><code>[Count to be inserted]</code></td>
+    <td><code>[% to be inserted]</code></td>
+    <td><code>[Avg to be inserted]</code></td>
+    <td>x86, x64</td>
+  </tr>
+  <tr>
+    <td><strong>BlackCat / ALPHV</strong></td>
+    <td><code>[Count to be inserted]</code></td>
+    <td><code>[% to be inserted]</code></td>
+    <td><code>[Avg to be inserted]</code></td>
+    <td>x64</td>
+  </tr>
+  <tr>
+    <td><strong>WannaCry / EternalBlue</strong></td>
+    <td><code>[Count to be inserted]</code></td>
+    <td><code>[% to be inserted]</code></td>
+    <td><code>[Avg to be inserted]</code></td>
+    <td>x86, x64</td>
+  </tr>
+  <tr>
+    <td><strong>Benign Control Corpus</strong></td>
+    <td><code>[Count to be inserted]</code></td>
+    <td><code>[% to be inserted]</code></td>
+    <td><code>[Avg to be inserted]</code></td>
+    <td>x86, x64</td>
+  </tr>
+</DataTable>
+
+<FigurePlaceholder 
+  figureId="3.4" 
+  title="Family Distribution & Feature Entropy Distribution" 
+  caption="Statistical distribution chart of sample cohorts across ransomware families and entropy bands."
+/>

@@ -1,0 +1,67 @@
+---
+title: "Cuckoo Sandbox and Malware Analysis"
+description: "Dynamic malware detonation architecture, host-guest virtualized environment, and behavioral telemetry capture."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
+import WorkflowDiagram from '../../../components/WorkflowDiagram.astro';
+
+<PageIntro 
+  subtitle="Dynamic behavioral execution environment, kernel API interception, and automated execution trace generation." 
+  note="Research content will be added. This page defines the formal structure and planned headings."
+/>
+
+## Purpose of Dynamic Malware Analysis
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Formal discussion on the rationale for dynamic instrumentation over static disassembly in the presence of packed, obfuscated, and polymorphic ransomware binaries.</div>
+</div>
+
+*Content to be supplied: Methodological justification for dynamic execution monitoring, API hooking, and runtime behavioral trace extraction.*
+
+## Sandbox Architecture
+
+<WorkflowDiagram 
+  title="Host-Guest Virtualized Isolation Architecture" 
+  figureNumber="Figure 3.2"
+  caption="Host hypervisor management network, guest Windows detonation VM, isolated virtual switch, and out-of-band telemetry collection bus."
+/>
+
+## Host and Guest Virtual Machines
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Specifications for hypervisor host configuration, guest operating system hardening, decoy file injection, and anti-evasion countermeasures.</div>
+</div>
+
+*Content to be supplied: Detailed technical specifications for host hardware, KVM/VirtualBox hypervisor layer, guest OS build versions, and fake network services (INetSim).*
+
+## Sample Submission and Execution
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Automated sample ingestion pipeline, execution duration parameters, simulated user interaction, and process injection tracking.</div>
+</div>
+
+*Content to be supplied: Submission protocols, execution timeout thresholds (e.g., 300s), human simulation heuristics (cursor movements, dialog clicking), and memory snapshotting procedures.*
+
+<FigurePlaceholder 
+  figureId="3.3" 
+  title="Real-Time Sample Execution & API Interception Trace" 
+  caption="Visual trace of ransomware process tree execution, DLL loading events, and filesystem encryption burst activity."
+/>
+
+## Report Generation
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Extraction of raw JSON execution dumps, dropped binary artifacts, network PCAPs, and API trace sequences.</div>
+</div>
+
+*Content to be supplied: Documentation of report serialization structure, summary JSON dictionaries, and telemetry sanitization filters.*
+
+## Safety and Analysis Boundaries
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Safety protocols, network isolation walls, non-routable host-only networking, snapshot reversion mechanics, and containment boundaries.</div>
+</div>
+
+*Content to be supplied: Ethical guidelines, strict isolation verification protocols, and risk mitigation against virtual machine escapes.*

@@ -1,0 +1,83 @@
+---
+title: "Signature Impact Quantification"
+description: "Information-theoretic formulation for behavioral signature severity, co-occurrence analysis, and mutual-information refinement."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+import WorkflowDiagram from '../../../components/WorkflowDiagram.astro';
+
+<PageIntro 
+  subtitle="Information-theoretic formulation for empirical signature severity scoring and co-occurrence weighting." 
+  note="Research content will be added. Placeholders for equations, algorithmic pseudocode, and process workflows are staged below without fabricated formulas."
+/>
+
+## Purpose of Impact Quantification
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Academic rationale for replacing static heuristic severity ratings with an empirical, information-theoretic scoring formulation.</div>
+</div>
+
+*Content to be supplied: Detailed motivation for mathematical impact quantification based on empirical execution telemetry.*
+
+## Initial Severity Assignment
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Baseline severity assignment based on domain threat taxonomy, privilege boundaries violated, and systemic asset criticality.</div>
+</div>
+
+*Content to be supplied: Initial baseline scoring mechanics and weighting parameters.*
+
+## Severity Bands
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Definition of discrete severity bands (e.g., Critical, High, Moderate, Low, Informational) and boundary threshold criteria.</div>
+</div>
+
+*Content to be supplied: Operational classification rules partitioning quantitative severity scores into actionable defensive tiers.*
+
+## Co-Occurrence Analysis
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Mathematical modeling of behavioral signature co-occurrence across diverse ransomware execution traces.</div>
+</div>
+
+*Content to be supplied: Co-occurrence matrix formulation capturing conditional probabilities of coupled execution behaviors.*
+
+## Mutual-Information Refinement
+
+<div class="academic-placeholder-banner">
+  <div><strong>Notice:</strong> Formal information-theoretic equations and mutual-information refinement formulas will be populated upon theoretical finalization. Do not invent formulas.</div>
+</div>
+
+<div class="equation-placeholder">
+  [Formal Equation Placeholder: Mutual Information Formulation I(S_i; S_j) & Refinement Metric to be inserted]
+</div>
+
+*Content to be supplied: Stepwise mathematical derivation of mutual-information weights correcting for redundant or collinear signature noise.*
+
+## Algorithm Inputs and Outputs
+
+Below is the structured pseudocode template illustrating the algorithm interface:
+
+```text
+Algorithm: Mutual Information-Based Signature Impact Refinement
+Input:
+  - Signature_Set S = {s_1, s_2, ..., s_n}
+  - Execution_Traces T = {t_1, t_2, ..., t_m}
+  - Initial_Weights W_init = {w_1, w_2, ..., w_n}
+Output:
+  - Refined_Severity_Scores W_refined = {w'_1, w'_2, ..., w'_n}
+
+Procedure:
+  1. [Pseudocode step: Construct empirical co-occurrence frequency matrix]
+  2. [Pseudocode step: Compute joint and marginal probability distributions]
+  3. [Pseudocode step: Calculate mutual information metric I(s_i; s_j)]
+  4. [Pseudocode step: Adjust initial weights using non-linear discounting function]
+  5. Return W_refined
+```
+
+<WorkflowDiagram 
+  title="Impact Quantification & Weight Refinement Flowchart" 
+  figureNumber="Figure 3.7"
+  caption="Algorithmic workflow mapping raw trace frequencies to joint probabilities, mutual-information calculation, and final calibrated severity weights."
+/>

@@ -1,0 +1,195 @@
+---
+title: "Introduction and Background"
+description: "Contextual analysis of ransomware threats, multi-stage execution lifecycles, evasive techniques, and the evolutionary defense framework."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+import WorkflowDiagram from '../../../components/WorkflowDiagram.astro';
+import ReferenceItem from '../../../components/ReferenceItem.astro';
+
+<PageIntro 
+  subtitle="Ransomware defense requires more than identifying malicious software. It also requires understanding the behavior of an attack, evaluating suitable defensive mechanisms, and selecting an effective combination of defenses. This project investigates an integrated approach that combines dynamic malware analysis, standardized attack–defense mapping, Large Language Model (LLM)-based residual severity estimation, and evolutionary optimization to support ransomware defense decisions."
+/>
+
+## Malware and Ransomware Background
+
+Malware is software designed to perform unauthorized or harmful activities, such as accessing sensitive information, disrupting system operations, or damaging data. Ransomware is a category of malware that restricts access to files or systems, commonly by encrypting data, and demands payment in exchange for a decryption key or restoration of access [1], [2].
+
+Early ransomware commonly relied on locking systems or encrypting files to prevent users from accessing their data. Modern campaigns have expanded these methods through double extortion, in which attackers steal sensitive data before encryption and threaten to publish or sell it if the ransom is not paid. Some campaigns use additional pressure tactics, such as distributed denial-of-service (DDoS) attacks or contacting the victim's customers and partners. These approaches are commonly described as triple or multiple extortion, although the tactics used vary between campaigns [1].
+
+Ransomware can affect individuals, businesses, and critical services. Successful attacks may interrupt normal operations, expose confidential information, create financial losses, and damage organizational reputation. Recovery can also be difficult when attackers compromise accessible backups or remove system recovery mechanisms. Consequently, ransomware defense requires attention to both the prevention of malicious actions and the reduction of their potential impact [1], [3].
+
+---
+
+## Ransomware Behaviour and Consequences
+
+Ransomware execution may involve several related behaviors, including initial access, execution, persistence, system and account discovery, privilege escalation, lateral movement, data collection or exfiltration, recovery inhibition, and file encryption. The exact sequence depends on the malware family, the targeted environment, and the attacker's objectives.
+
+One important behavior is inhibiting system recovery. Some ransomware operators delete volume shadow copies, disable recovery services, or remove accessible backups to make restoration more difficult. MITRE ATT&CK classifies this behavior under **Inhibit System Recovery (T1490)** [3]. Other ransomware behaviors involve encrypting files on local or remote systems to interrupt access to important resources, as described by **Data Encrypted for Impact (T1486)** [2].
+
+The consequences extend beyond file encryption. Organizations may experience service interruptions, loss of access to operational data, exposure of confidential information, and prolonged recovery efforts. Lateral movement can also allow attackers to reach additional systems, increasing the scope of an incident.
+
+Understanding these behaviors is important because different defensive mechanisms address different stages or aspects of an attack. A defense that detects suspicious process activity, for example, may not directly prevent file encryption or protect recovery infrastructure. This motivates the systematic evaluation of defenses against specific observed behaviors.
+
+### Ransomware Execution Lifecycle
+
+<WorkflowDiagram 
+  title="Ransomware Multi-Stage Execution Lifecycle" 
+  figureNumber="Figure 1.1"
+  status="Standard Threat Model"
+  caption="Generalized representation of ransomware-related behaviors. Not every ransomware incident follows this exact sequence, and some stages may be absent or occur in a different order."
+>
+  <div style="width: 100%; max-width: 820px; padding: 1.5rem 0.5rem; display: flex; flex-direction: column; gap: 1rem;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.825rem;">
+      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+        1. Initial Access
+      </div>
+      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
+      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+        2. Execution &amp; Persistence
+      </div>
+      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
+      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+        3. Discovery &amp; Privilege Escalation
+      </div>
+      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
+      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+        4. Lateral Movement
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; color: var(--sl-color-accent); font-size: 1.25rem; font-weight: bold;">↓</div>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.825rem;">
+      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+        5. Data Collection / Exfiltration
+      </div>
+      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
+      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--academic-card-border); border-radius: 6px; background: var(--academic-card-bg); text-align: center; font-weight: 600;">
+        6. Recovery Inhibition
+        <div style="font-size: 0.725rem; color: var(--sl-color-tech); font-weight: normal;">(T1490)</div>
+      </div>
+      <div style="color: var(--sl-color-accent); font-weight: bold;">→</div>
+      <div style="padding: 0.6rem 0.85rem; border: 1px solid var(--sl-color-accent); border-radius: 6px; background: var(--sl-color-accent-low); text-align: center; font-weight: 600; color: var(--sl-color-accent);">
+        7. Data Encryption &amp; Extortion
+        <div style="font-size: 0.725rem; color: var(--sl-color-accent); font-weight: normal;">(T1486)</div>
+      </div>
+    </div>
+  </div>
+</WorkflowDiagram>
+
+---
+
+## Evolution of Evasive Techniques
+
+Ransomware and related malware may use evasion techniques to avoid detection, hinder analysis, or reduce the effectiveness of security controls. These techniques make it difficult to rely on a single detection method or a fixed set of behavioral rules.
+
+Common evasion methods include:
+
+- **Polymorphic and metamorphic code:** Malware may modify its code, appearance, or generated representation to make signature-based identification more difficult.
+- **Packing and obfuscation:** Executable content, strings, and instructions may be compressed, encrypted, or transformed to complicate inspection. MITRE ATT&CK documents these behaviors under **Obfuscated Files or Information (T1027)** [4].
+- **Fileless execution and living-off-the-land techniques:** Malicious activity may rely on scripts, memory-resident payloads, or legitimate system utilities rather than depending entirely on a conventional malicious executable.
+- **Process injection and process hollowing:** Malicious code may execute within the address space of another process, potentially making its activity harder to distinguish from legitimate process behavior. Process hollowing is documented as ATT&CK technique **T1055.012** [5].
+- **Anti-sandbox and environment fingerprinting:** Malware may inspect system properties, virtualization artifacts, installed tools, user activity, or timing behavior to determine whether it is running in an analysis environment. It may then delay execution, terminate, or conceal its primary behavior [6].
+- **API unhooking and direct system calls:** Some malware attempts to bypass or interfere with user-mode monitoring mechanisms by removing hooks or using lower-level system-call paths. The effectiveness of these methods depends on the monitoring and defensive mechanisms in place.
+
+These techniques can reduce the behavioral evidence available to an analyst or automated analysis system. Dynamic analysis remains useful because it observes activity during execution, but its findings must be interpreted in the context of the behaviors actually observed. A sandbox report should not be assumed to contain every capability of the analyzed malware [6], [7].
+
+---
+
+## Motivation for the Project
+
+Existing ransomware research has explored behavioral detection, early detection, feature selection, and malware forecasting. However, identifying a malicious behavior and selecting an appropriate defense are different tasks. Even after a behavior is identified, analysts must determine which defensive mechanisms are relevant and how much of the attack capability may remain after applying them.
+
+Manually evaluating every combination of attack signatures and candidate defenses can become time-consuming as the number of behaviors and defenses increases. In addition, the effectiveness of a defense depends on the behavior being considered and how the defense is configured. A static defense list may therefore be insufficient for comparing different attack scenarios.
+
+This project addresses these challenges through an integrated workflow:
+- **Cuckoo Sandbox** provides observed malware behavior and triggered signatures.
+- **MITRE ATT&CK** supplies a structured vocabulary for characterizing adversarial techniques.
+- **MITRE D3FEND** supports the mapping of candidate defensive mechanisms.
+- **Signature impact quantification** provides severity-related information.
+- **Large Language Model (LLM)** evaluates individual attack–defense pairs to estimate residual severity (RS).
+- **Cooperative Co-Evolutionary Algorithm (CCEA)** searches for effective defense combinations using the resulting estimates.
+
+The motivation is to provide a systematic and explainable basis for comparing defensive strategies, reduce the manual effort involved in repeated attack–defense assessments, and support the selection of candidate defenses through measurable optimization. The framework is intended as a decision-support approach; its recommendations must still be evaluated against appropriate reference data and experimental results.
+
+---
+
+## Project Context
+
+This work is an academic research project titled **An Evolutionary Framework for Ransomware Defense Optimization**. It focuses on integrating malware behavior analysis, attack–defense mapping, residual-severity estimation, and evolutionary decision-making into a unified workflow.
+
+The project begins with ransomware samples analyzed in a controlled Cuckoo Sandbox environment. The generated reports are parsed to identify triggered behavioral signatures and relevant execution evidence. These behaviors are associated with MITRE ATT&CK tactics, techniques, and sub-techniques, after which candidate defensive mechanisms are identified through the project's ATT&CK–D3FEND mapping process.
+
+The signature impact quantification component assigns and refines behavior-related severity scores. The LLM-based residual-severity component then evaluates the likely effect of a defensive mechanism on a given attack behavior and estimates the remaining severity. Finally, CCEA evaluates candidate defense combinations using the resulting severity estimates and a fitness function, iteratively retaining promising solutions and selecting a recommended combination.
+
+### Four Main Technical Components
+
+1. **Dynamic malware analysis:** Collect behavioral evidence and triggered signatures from controlled sample execution.
+2. **Attack–defense mapping:** Relate observed behaviors to standardized ATT&CK techniques and candidate D3FEND defensive mechanisms.
+3. **Impact and residual-severity estimation:** Quantify signature impact and use an LLM to estimate the remaining severity of attack–defense pairs.
+4. **Evolutionary defense optimization:** Search for effective combinations of candidate defenses using CCEA.
+
+The scope is defense analysis and optimization using the collected behavioral evidence. The framework does not assume that sandbox observations capture every possible malware behavior, that an LLM estimate is automatically correct, or that a recommended defense combination guarantees complete prevention in a production environment.
+
+---
+
+## References
+
+<ReferenceItem 
+  number={1}
+  authors="Cybersecurity and Infrastructure Security Agency (CISA)"
+  title="#StopRansomware Guide"
+  venue="CISA Technical Guide"
+  year="Sept. 2023"
+  url="https://www.cisa.gov/stopransomware/ransomware-guide"
+/>
+
+<ReferenceItem 
+  number={2}
+  authors="MITRE"
+  title="Data Encrypted for Impact (T1486)"
+  venue="MITRE ATT&CK Enterprise Matrix"
+  url="https://attack.mitre.org/techniques/T1486/"
+/>
+
+<ReferenceItem 
+  number={3}
+  authors="MITRE"
+  title="Inhibit System Recovery (T1490)"
+  venue="MITRE ATT&CK Enterprise Matrix"
+  url="https://attack.mitre.org/techniques/T1490/"
+/>
+
+<ReferenceItem 
+  number={4}
+  authors="MITRE"
+  title="Obfuscated Files or Information (T1027)"
+  venue="MITRE ATT&CK Enterprise Matrix"
+  url="https://attack.mitre.org/techniques/T1027/"
+/>
+
+<ReferenceItem 
+  number={5}
+  authors="MITRE"
+  title="Process Injection: Process Hollowing (T1055.012)"
+  venue="MITRE ATT&CK Enterprise Matrix"
+  url="https://attack.mitre.org/techniques/T1055/012/"
+/>
+
+<ReferenceItem 
+  number={6}
+  authors="MITRE"
+  title="Virtualization/Sandbox Evasion (T1497)"
+  venue="MITRE ATT&CK Enterprise Matrix"
+  url="https://attack.mitre.org/techniques/T1497/"
+/>
+
+<ReferenceItem 
+  number={7}
+  authors="M. Egele, T. Scholte, E. Kirda, and C. Kruegel"
+  title="A survey on automated dynamic malware-analysis techniques and tools"
+  venue="ACM Computing Surveys, vol. 44, no. 2, Art. no. 6"
+  year="2012"
+  doi="10.1145/2089125.2089126"
+/>

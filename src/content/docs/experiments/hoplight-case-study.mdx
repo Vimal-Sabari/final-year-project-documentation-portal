@@ -1,0 +1,90 @@
+---
+title: "BeagleBoyz/APT38–HOPLIGHT Case Study"
+description: "Empirical case study evaluating the evolutionary defense framework against the BeagleBoyz (APT38) HOPLIGHT malware campaign."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+import DataTable from '../../../components/DataTable.astro';
+import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
+
+<PageIntro 
+  subtitle="End-to-end validation case study analyzing BeagleBoyz (APT38) HOPLIGHT backdoor and multi-stage extortion behaviors." 
+  note="Research content will be added. Technique tables and result figure containers are staged below without fabricated research data."
+/>
+
+## Case-Study Background
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Threat intelligence dossier on BeagleBoyz (APT38) threat actor group, operational context of HOPLIGHT malware variants, and target victim infrastructure.</div>
+</div>
+
+*Content to be supplied: Detailed historical background on APT38 campaigns, financial extortion tactics, and HOPLIGHT malware architecture.*
+
+## Experimental Behaviours
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Dynamic execution traces, network beaconing telemetry, and filesystem modification signatures captured during isolated detonation.</div>
+</div>
+
+*Content to be supplied: Complete timeline of observed dynamic behaviors, registry persistence keys, and obfuscated TLS traffic signatures.*
+
+## Mapped Techniques and Candidate Defenses
+
+Below is the technique alignment table linking observed HOPLIGHT behaviors to candidate D3FEND mitigations:
+
+<DataTable 
+  headers={["Observed Behavior", "ATT&CK Technique", "Candidate D3FEND Defense", "Defensive Layer", "Residual Severity"]}
+  caption="Table 4.5: HOPLIGHT behavioral alignment and candidate countermeasure mapping (Experimental data to be inserted)."
+>
+  <tr>
+    <td>Encrypted C2 Communication via Fake TLS</td>
+    <td><strong>T1071.001: Web Protocols</strong></td>
+    <td>D3-NTA: Network Traffic Analysis</td>
+    <td>Network Perimeter</td>
+    <td><code>[Score to be inserted]</code></td>
+  </tr>
+  <tr>
+    <td>Process Injection into `svchost.exe`</td>
+    <td><strong>T1055: Process Injection</strong></td>
+    <td>D3-PSA: Process Segment Authentication</td>
+    <td>Host Kernel</td>
+    <td><code>[Score to be inserted]</code></td>
+  </tr>
+  <tr>
+    <td>Configuration File Decryption in Memory</td>
+    <td><strong>T1140: Deobfuscate/Decode Files</strong></td>
+    <td>D3-MFA: Memory Forensic Analysis</td>
+    <td>Endpoint Memory</td>
+    <td><code>[Score to be inserted]</code></td>
+  </tr>
+</DataTable>
+
+## Residual-Severity Assessment
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> LLM structured residual severity estimates across isolated HOPLIGHT techniques compared against expert red-team evaluations.</div>
+</div>
+
+*Content to be supplied: Quantitative analysis of residual severity scores under individual versus combined defensive controls.*
+
+## Optimization Outcome
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Optimal defense portfolio synthesized by CCEA specifically neutralizing HOPLIGHT lateral movement and persistence mechanisms.</div>
+</div>
+
+*Content to be supplied: Recommended defense policy configuration, deployment cost trade-off, and verified attack path disruption.*
+
+<FigurePlaceholder 
+  figureId="4.3" 
+  title="HOPLIGHT Attack Graph Disruption under CCEA Defense" 
+  caption="Attack execution graph illustrating complete pathway severance achieved by the Pareto-optimal defense portfolio."
+/>
+
+## Analysis and Limitations
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Critical examination of case study findings, generalizability to other state-sponsored extortion actors, and experimental constraints.</div>
+</div>
+
+*Content to be supplied: Methodological analysis of case study insights and boundaries.*

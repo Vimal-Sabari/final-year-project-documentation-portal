@@ -1,0 +1,94 @@
+---
+title: "MITRE D3FEND Defense Mapping"
+description: "Cross-referencing ATT&CK techniques with MITRE D3FEND defensive countermeasures and digital artifact relationships."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+import DataTable from '../../../components/DataTable.astro';
+import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
+
+<PageIntro 
+  subtitle="Ontological mapping bridging adversarial ATT&CK techniques to defensive countermeasures in the MITRE D3FEND matrix." 
+  note="Research content will be added. Placeholders for artifact relationship tables and ontology graphs are staged below."
+/>
+
+## D3FEND Overview
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Introduction to the MITRE D3FEND matrix, countermeasure taxonomies (Model, Harden, Detect, Isolate, Deceive, Evict), and knowledge graph structure.</div>
+</div>
+
+*Content to be supplied: Architectural review of D3FEND ontology representation (OWL/RDF) and graph traversal paradigms.*
+
+## Candidate Defense Identification
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Automated identification of candidate defensive capabilities capable of neutralizing or detecting mapped ATT&CK techniques.</div>
+</div>
+
+*Content to be supplied: Formal candidate selection algorithm based on defensive graph reachability.*
+
+## Defense-Artifact Relationships
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Modeling digital artifact dependencies linking defensive sensors to kernel, process, and file system objects.</div>
+</div>
+
+*Content to be supplied: Detailed relationship mappings connecting D3FEND countermeasure nodes to specific digital artifacts.*
+
+<DataTable 
+  headers={["D3FEND ID", "Defensive Technique", "Target Digital Artifact", "Defensive Action", "Maturity Tier"]}
+  caption="Table 3.3: MITRE D3FEND countermeasure relationship schema (Research records to be inserted)."
+>
+  <tr>
+    <td><code>D3-FSI</code></td>
+    <td>File System Integrity Monitoring</td>
+    <td>File Metadata & Content</td>
+    <td>Detect / Verify</td>
+    <td><code>[Maturity to be inserted]</code></td>
+  </tr>
+  <tr>
+    <td><code>D3-PSA</code></td>
+    <td>Process Segment Authentication</td>
+    <td>Process Memory Segment</td>
+    <td>Harden / Isolate</td>
+    <td><code>[Maturity to be inserted]</code></td>
+  </tr>
+  <tr>
+    <td><code>D3-SPP</code></td>
+    <td>Shadow Copy Protection</td>
+    <td>System Restore Volume</td>
+    <td>Harden</td>
+    <td><code>[Maturity to be inserted]</code></td>
+  </tr>
+</DataTable>
+
+## Attack–Defense Mapping
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Explicit crosswalk bipartite graph aligning specific ATT&CK threat nodes with mitigating D3FEND countermeasure nodes.</div>
+</div>
+
+*Content to be supplied: Bipartite graph formulation mapping `T_i` (ATT&CK technique) to `D_j` (D3FEND countermeasure).*
+
+<FigurePlaceholder 
+  figureId="3.6" 
+  title="ATT&CK to D3FEND Ontological Knowledge Graph" 
+  caption="Bipartite graph visualization illustrating direct mitigation paths between offensive ransomware techniques and defensive countermeasure nodes."
+/>
+
+## Provenance and Verification
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Cryptographic provenance tracking, validation rules, and automated consistency checking across knowledge graphs.</div>
+</div>
+
+*Content to be supplied: Verification methodology confirming mapping validity and preventing cyclic dependency conflicts.*
+
+## Mapping Limitations
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Technical constraints, granularity discrepancies between attack and defense abstractions, and coverage gaps.</div>
+</div>
+
+*Content to be supplied: Critical evaluation of D3FEND coverage limitations for novel zero-day evasion vectors.*

@@ -1,0 +1,86 @@
+---
+title: "Behavioral Signature Extraction"
+description: "Parsing sandbox execution telemetry, identifying triggered signatures, and synthesizing structured behavioral vectors."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+
+<PageIntro 
+  subtitle="Algorithmic parsing of raw telemetry traces into normalized, structured behavioral signatures." 
+  note="Research content will be added. Code templates and structured schema placeholders are staged below without fabricated research records."
+/>
+
+## Cuckoo Report Processing
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Pipeline architecture for parsing large multi-megabyte Cuckoo JSON reports, filtering transient noise, and extracting salient execution blocks.</div>
+</div>
+
+*Content to be supplied: Telemetry sanitization pipeline, thread reconciliation algorithms, and high-entropy API sequence isolation.*
+
+## Triggered Signatures
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Taxonomy of community and customized signatures triggered during dynamic malware execution.</div>
+</div>
+
+*Content to be supplied: Classification of detected signatures across filesystem tampering, registry persistence, anti-analysis, process injection, and shadow copy manipulation.*
+
+## APIs and Behavioural Evidence
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Mapping individual Windows Native API calls (e.g., `NtWriteVirtualMemory`, `CreateRemoteThread`, `CryptEncrypt`) to evidentiary behavioral traces.</div>
+</div>
+
+*Content to be supplied: Systematic catalog of critical API sequences, argument invariants, and return code validations.*
+
+## Signature Attributes
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Definition of attribute fields associated with each behavioral signature (category, severity tier, confidence score, evidence tokens).</div>
+</div>
+
+*Content to be supplied: Formal definition of signature tuples:*
+
+```text
+Signature = <ID, Name, Category, APICalls, SeverityWeight, Confidence>
+```
+
+## Structured Output
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Formal JSON and tabular schema output consumed by downstream ontological mapping and optimization modules.</div>
+</div>
+
+*Content to be supplied: JSON schema specification validating extracted behavioral signatures.*
+
+## Example Input and Output
+
+Below is the structured template demonstrating the expected JSON schema contract (research values to be populated upon experimental pipeline run):
+
+```json
+{
+  "sample_hash": "[SHA256_HASH_TO_BE_SUPPLIED]",
+  "analysis_timestamp": "[TIMESTAMP_TO_BE_SUPPLIED]",
+  "extracted_signatures": [
+    {
+      "signature_id": "SIG_BEH_001",
+      "signature_name": "[Signature Name to be supplied]",
+      "category": "ransomware_evasion",
+      "observed_apis": [
+        "[API_Call_1]",
+        "[API_Call_2]"
+      ],
+      "severity_score": 0.0,
+      "confidence": 0.0,
+      "attck_candidates": [
+        "[Technique_ID_to_be_mapped]"
+      ]
+    }
+  ],
+  "metadata": {
+    "execution_duration_sec": 0,
+    "total_api_calls_logged": 0
+  }
+}
+```

@@ -1,0 +1,104 @@
+---
+title: "LLM-Based Residual Severity Estimation"
+description: "Structured prompt-driven reasoning for estimating residual severity and defensive mitigation efficacy under adversarial countermeasures."
+---
+
+import PageIntro from '../../../components/PageIntro.astro';
+
+<PageIntro 
+  subtitle="Methodological framework for structured LLM reasoning to estimate residual risk following countermeasure deployment." 
+  note="Research content will be added. Prompt templates, validation schemas, and input/output contracts are staged below without fabricated research outputs."
+/>
+
+## Purpose of Residual-Severity Estimation
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Theoretical motivation for utilizing structured reasoning models to estimate non-linear, multi-layer defensive mitigation efficacy.</div>
+</div>
+
+*Content to be supplied: Comprehensive explanation of residual risk estimation, modeling defensive coverage gaps, and reasoning over complex attack-defense permutations.*
+
+## Model Configuration
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Hyperparameter configurations, temperature settings, top-p thresholds, model checkpoint versions, and deterministic reasoning constraints.</div>
+</div>
+
+*Content to be supplied: Model architecture specifications, context window constraints, and inference repeatability protocols.*
+
+## Inputs to the Reasoning Process
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Formal input payload specification providing attack signatures, D3FEND candidate mitigations, telemetry context, and system assets.</div>
+</div>
+
+*Content to be supplied: Detailed description of context serialization, JSON input formatting, and domain prompt injection safeguards.*
+
+## Prompt Structure Template
+
+Below is the staged prompt engineering template governing model reasoning:
+
+```text
+[SYSTEM PROMPT PLACEHOLDER]
+You are a formal cybersecurity reasoning system evaluating defensive mitigation efficacy.
+Given an observed ransomware attack technique T and an active candidate D3FEND defense D, 
+evaluate whether D neutralizes, degrades, or bypasses T. 
+Estimate the remaining residual severity on a calibrated scale from 0.0 to 1.0.
+
+[INPUT PAYLOAD FORMAT]
+- Attack Technique: {technique_name, technique_id, api_indicators}
+- Candidate Defenses: [{defense_id, defensive_mechanism, artifact_monitored}]
+- Contextual Host State: {target_os, privilege_tier}
+
+[REQUIRED OUTPUT SCHEMA]
+Output MUST conform strictly to the specified JSON schema without extraneous conversational tokens.
+```
+
+## Evaluation of Defensive Effectiveness
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Formal criteria governing model reasoning across complete neutralization, partial mitigation, and total defense bypass.</div>
+</div>
+
+*Content to be supplied: Categorical classification criteria defining mitigation effectiveness bands.*
+
+## Residual-Severity Output Schema
+
+Below is the formal JSON schema governing model response validation:
+
+```json
+{
+  "evaluation_id": "[EVAL_UUID_PLACEHOLDER]",
+  "technique_id": "T1486",
+  "evaluated_defenses": ["D3-FSI"],
+  "mitigation_status": "partially_mitigated",
+  "residual_severity_score": 0.0,
+  "confidence_interval": [0.0, 0.0],
+  "reasoning_trace": "[Formal qualitative reasoning to be inserted]",
+  "uncertainty_flag": false
+}
+```
+
+## Output Validation
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Schema validation pipeline, programmatic Pydantic parsing, fallback error handling, and hallucination guardrails.</div>
+</div>
+
+*Content to be supplied: Deterministic validation architecture ensuring outputs satisfy type constraints, numeric boundaries, and ontological validity.*
+
+## Ground Truth and Benchmark Evaluation
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Expert-annotated benchmark dataset, inter-annotator agreement metrics (Cohen's Kappa), and alignment evaluation methodology.</div>
+</div>
+
+*Content to be supplied: Benchmark construction protocol and calibration against human cybersecurity expert consensus.*
+
+## Limitations and Uncertainty
+
+<div class="academic-placeholder-banner">
+  <div><strong>Section Placeholder:</strong> Limitations arising from model stochasticity, prompt sensitivity, unseen zero-day behaviors, and out-of-distribution reasoning artifacts.</div>
+</div>
+
+*Content to be supplied: Critical discussion on reasoning boundaries and uncertainty calibration.*
