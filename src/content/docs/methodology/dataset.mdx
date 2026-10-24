@@ -1,6 +1,6 @@
 ---
 title: "Dataset Construction"
-description: "Empirical ransomware dataset curation, validation, deduplication, feature extraction, and cohort criteria."
+description: "Empirical malware dataset curation, sample validation, SHA-256 deduplication, classification, and report parsing."
 ---
 
 import PageIntro from '../../../components/PageIntro.astro';
@@ -8,93 +8,172 @@ import DataTable from '../../../components/DataTable.astro';
 import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
 
 <PageIntro 
-  subtitle="Rigorous curation methodology, binary verification, deduplication, and feature extraction across ransomware sample cohorts." 
-  note="Research content will be added. Placeholders for empirical statistics and distribution charts are staged without fabricated values."
+  subtitle="Empirical malware sample curation, VirusTotal authenticity validation, SHA-256 deduplication, and JSON report metadata extraction." 
 />
+
+The project uses a collection of malware samples to study ransomware-related behaviors and support the development of the proposed defense optimization framework. The dataset is processed through sample validation, duplicate removal, malware classification, sandbox execution, and behavioral report extraction.
+
+---
 
 ## Dataset Sources
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Repositories and academic threat sharing platforms providing confirmed ransomware binaries and benign executables.</div>
-</div>
+The project has collected approximately **3,000 malware samples** from multiple sources, including VirusTotal, VirusShare, and samples provided by the project guide.
 
-*Content to be supplied: Provenance documentation for public repositories (MalwareBazaar, VirusShare, VirusTotal) and research corpus acquisitions.*
+The collected samples form the initial repository for malware analysis. The dataset is organized to support sample identification, behavioral analysis, and the extraction of triggered signatures for subsequent attack–defense mapping.
+
+---
 
 ## Sample Validation and Deduplication
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Cryptographic hashing (SHA-256), ssdeep fuzzy hashing, PE header inspection, and execution validation protocols.</div>
-</div>
+The project uses VirusTotal information to validate the authenticity of collected samples. Duplicate samples are removed using their SHA-256 cryptographic hashes.
 
-*Content to be supplied: Multi-stage deduplication pipeline ensuring identical binary packers and polymorphic permutations are appropriately grouped or filtered.*
+SHA-256 hashing provides a consistent identifier for comparing files and detecting identical samples within the repository. Removing duplicate files helps avoid repeatedly analyzing identical binaries and reduces unnecessary duplication in the dataset.
+
+The documented preparation process includes:
+
+1. **Collection:** Collecting malware samples from the identified sources.
+2. **Authenticity Validation:** Checking sample authenticity using VirusTotal information.
+3. **Deduplication:** Computing SHA-256 hashes to identify and remove duplicate samples.
+4. **Repository Organization:** Organizing the remaining samples for further analysis.
+
+---
 
 ## Malware Classification
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Multi-engine AV consensus labelling (AVClass / AVClass2), family attribution, and threat group correlation.</div>
+The collected samples are segregated according to their available malware-class information. Online antivirus engines are also used as part of the sample-classification process.
+
+This classification supports the organization of the malware repository and helps identify samples for subsequent analysis. The classification process should retain the available sample identifiers and class labels so that analysis reports can be associated with their corresponding samples.
+
+<div class="academic-callout" style="margin: 1.5rem 0; padding: 1rem 1.25rem; border-left: 4px solid var(--sl-color-tech); background: var(--academic-card-bg); border: 1px solid var(--academic-card-border); border-left-width: 4px; border-left-color: var(--sl-color-tech); border-radius: 6px;">
+  <p style="margin: 0; font-size: 0.85rem; color: var(--sl-color-gray-3); line-height: 1.55;">
+    <strong>Methodological Scope Note:</strong> The current project documentation does not specify the use of AVClass or AVClass2, a formal multi-engine consensus threshold, or a complete ground-truth family attribution procedure. These methods should not be reported as implemented unless they are independently verified.
+  </p>
 </div>
 
-*Content to be supplied: Family labeling methodology, handling ambiguous detections, and establishing ground-truth taxonomic classes.*
+---
 
 ## Metadata and Data Fields
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Formal schema of extracted binary and execution metadata attributes.</div>
-</div>
+After sandbox analysis, the generated JSON reports are programmatically parsed to extract relevant metadata and behavioral information.
 
-*Content to be supplied: Specification of metadata fields (sample hash, file size, compile timestamp, packer status, entropy score, API call frequency).*
-
-## Inclusion and Exclusion Criteria
-
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Objective criteria for accepting active ransomware samples and disqualifying corrupt or non-functional binaries.</div>
-</div>
-
-- **Inclusion Criteria:** Verified execution within target Windows OS, demonstrated filesystem modification or encryption attempts, confirmed cryptographic hash provenance.
-- **Exclusion Criteria:** Corrupt PE headers, immediate crash/unhandled exception without API activity, non-functional command-and-control dependencies that prevent execution.
-
-## Dataset Statistics
-
-<div class="academic-placeholder-banner">
-  <div><strong>Notice:</strong> Empirical metrics and cohort distribution tables will be populated upon completion of sample curation. Fabricated numbers are omitted.</div>
-</div>
+The Phase 2 implementation documents the following report information:
 
 <DataTable 
-  headers={["Malware Family", "Sample Count", "Execution Success Rate", "Average Behavioral Signatures", "Target Architectures"]}
-  caption="Table 3.1: Dataset distribution across primary ransomware families and benign control sets (Empirical metrics to be inserted)."
+  headers={["Data Category", "Extracted Information"]}
+  caption="Table 3.1: Extracted execution telemetry and behavioral signature attributes from Cuckoo JSON reports."
 >
   <tr>
-    <td><strong>LockBit Family</strong></td>
-    <td><code>[Count to be inserted]</code></td>
-    <td><code>[% to be inserted]</code></td>
-    <td><code>[Avg to be inserted]</code></td>
-    <td>x86, x64</td>
+    <td><strong>Execution Metadata</strong></td>
+    <td>Analysis timestamps and duration</td>
   </tr>
   <tr>
-    <td><strong>BlackCat / ALPHV</strong></td>
-    <td><code>[Count to be inserted]</code></td>
-    <td><code>[% to be inserted]</code></td>
-    <td><code>[Avg to be inserted]</code></td>
-    <td>x64</td>
+    <td><strong>Sample Identification</strong></td>
+    <td>Sample ID, category, and type</td>
   </tr>
   <tr>
-    <td><strong>WannaCry / EternalBlue</strong></td>
-    <td><code>[Count to be inserted]</code></td>
-    <td><code>[% to be inserted]</code></td>
-    <td><code>[Avg to be inserted]</code></td>
-    <td>x86, x64</td>
+    <td><strong>Environment Information</strong></td>
+    <td>Virtual-machine and machine details</td>
   </tr>
   <tr>
-    <td><strong>Benign Control Corpus</strong></td>
-    <td><code>[Count to be inserted]</code></td>
-    <td><code>[% to be inserted]</code></td>
-    <td><code>[Avg to be inserted]</code></td>
-    <td>x86, x64</td>
+    <td><strong>Platform Information</strong></td>
+    <td>Information about the analysis platform</td>
+  </tr>
+  <tr>
+    <td><strong>Runtime Configuration</strong></td>
+    <td>Options used for the analysis</td>
+  </tr>
+  <tr>
+    <td><strong>Threat Assessment</strong></td>
+    <td>Aggregated threat score</td>
+  </tr>
+  <tr>
+    <td><strong>Behavioral Signatures</strong></td>
+    <td>List of triggered signatures</td>
+  </tr>
+  <tr>
+    <td><strong>Signature Attributes</strong></td>
+    <td>Signature name, severity score, and mark count, where available</td>
   </tr>
 </DataTable>
 
+These fields support the identification of analyzed samples and the extraction of behavioral signatures. The resulting data are used by the project's downstream modules for ATT&CK technique mapping, signature impact quantification, and residual-severity assessment.
+
+---
+
+## Inclusion and Exclusion Criteria
+
+The documented dataset preparation process includes sample collection, VirusTotal-based validation, SHA-256 duplicate removal, and segregation according to malware-class information.
+
+The final experimental dataset consists of the samples that are selected for analysis under the project's configured workflow. The analysis reports and extracted signatures are used to determine which samples provide usable behavioral evidence for the subsequent stages.
+
+<div class="academic-callout" style="margin: 1.5rem 0; padding: 1rem 1.25rem; border-left: 4px solid var(--sl-color-tech); background: var(--academic-card-bg); border: 1px solid var(--academic-card-border); border-left-width: 4px; border-left-color: var(--sl-color-tech); border-radius: 6px;">
+  <p style="margin: 0; font-size: 0.85rem; color: var(--sl-color-gray-3); line-height: 1.55;">
+    <strong>Boundary Note:</strong> The current project presentation does not specify formal inclusion and exclusion thresholds based on PE-header validation, ssdeep similarity, minimum API activity, execution-success rate, or a fixed analysis timeout. These criteria should be added only if they are implemented and documented in the actual dataset preparation process.
+  </p>
+</div>
+
+---
+
+## Dataset Statistics
+
+The Phase 2 presentation reports that approximately 3,000 malware samples were collected. It does not provide a complete, verified distribution of samples by ransomware family, execution-success rate, average number of triggered signatures, or target architecture.
+
+The following table summarizes the currently documented information:
+
+<DataTable 
+  headers={["Attribute", "Documented Information"]}
+  caption="Table 3.2: Dataset construction summary across curation stages."
+>
+  <tr>
+    <td><strong>Approximate Sample Collection</strong></td>
+    <td>Approximately 3,000 malware samples</td>
+  </tr>
+  <tr>
+    <td><strong>Sources</strong></td>
+    <td>VirusTotal, VirusShare, and samples provided by the project guide</td>
+  </tr>
+  <tr>
+    <td><strong>Sample Validation</strong></td>
+    <td>VirusTotal information</td>
+  </tr>
+  <tr>
+    <td><strong>Duplicate Removal</strong></td>
+    <td>SHA-256 cryptographic hashing</td>
+  </tr>
+  <tr>
+    <td><strong>Malware Classification</strong></td>
+    <td>Available malware-class information and online antivirus-engine scanning</td>
+  </tr>
+  <tr>
+    <td><strong>Behavioral Analysis</strong></td>
+    <td>Cuckoo Sandbox</td>
+  </tr>
+  <tr>
+    <td><strong>Primary Analysis Output</strong></td>
+    <td>JSON analysis reports</td>
+  </tr>
+  <tr>
+    <td><strong>Behavioral Information Extracted</strong></td>
+    <td>Triggered signatures and associated attributes</td>
+  </tr>
+</DataTable>
+
+<p style="font-size: 0.85rem; color: var(--sl-color-gray-3); margin-top: 0.75rem;">
+  Additional statistics, including family-level sample counts, execution-success rates, average triggered signatures per sample, and architecture distributions, can be included after they have been calculated from the actual dataset and analysis reports.
+</p>
+
+---
+
+## Empirical Distribution Visualizations
+
 <FigurePlaceholder 
   figureId="3.4" 
-  title="Family Distribution & Feature Entropy Distribution" 
-  caption="Statistical distribution chart of sample cohorts across ransomware families and entropy bands."
+  title="Malware Sample Distribution and Behavioral Signature Statistics" 
+  caption="A chart showing the actual distribution of collected samples by malware class or family, together with a chart of triggered-signature counts, if these statistics are available."
 />
+
+<div class="academic-callout" style="margin: 1.5rem 0; padding: 1rem 1.25rem; border-left: 4px solid var(--sl-color-accent); background: var(--academic-card-bg); border: 1px solid var(--academic-card-border); border-left-width: 4px; border-left-color: var(--sl-color-accent); border-radius: 6px;">
+  <p style="margin: 0; font-size: 0.85rem; color: var(--sl-color-gray-2); line-height: 1.55;">
+    <strong>Scientific Integrity Note:</strong> Figure 3.4 will be generated directly from the project's actual dataset. In accordance with academic reporting guidelines, no sample counts or family distributions are estimated or fabricated.
+  </p>
+</div>
