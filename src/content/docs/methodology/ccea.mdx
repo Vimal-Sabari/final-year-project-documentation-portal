@@ -43,8 +43,9 @@ Here, `C_space` is the space of candidate defense combinations and `F(C)` is the
 
 The fitness function compares aggregate attack-impact scores with the corresponding aggregate residual-severity estimates. A higher fitness value indicates a larger reduction between the normalized aggregate attack impact and the normalized aggregate residual severity, according to the defined formula.
 
-> [!NOTE]
-> **Single-Objective Formulation:** The current implementation focuses on this severity-based objective. Deployment cost, performance overhead, and coverage breadth are not included as separate objective functions in the documented fitness formula. Likewise, the algorithm does not currently establish a Pareto-optimal portfolio or guarantee a globally optimal solution.
+:::note[Single-Objective Formulation]
+The current implementation focuses on this severity-based objective. Deployment cost, performance overhead, and coverage breadth are not included as separate objective functions in the documented fitness formula. Likewise, the algorithm does not currently establish a Pareto-optimal portfolio or guarantee a globally optimal solution.
+:::
 
 ---
 
@@ -133,8 +134,9 @@ After evaluating a combination, the decision-making component compares its fitne
 
 This mechanism retains the best candidate found so far even when subsequent combinations do not improve upon it.
 
-> [!CAUTION]
-> **Implementation Scope:** The documented selection process uses exploration, best-so-far choices, mutation, and retained fitness history. It should not be described as tournament selection, multipoint crossover, or Pareto-based selection unless those operators are separately implemented.
+:::caution[Implementation Scope]
+The documented selection process uses exploration, best-so-far choices, mutation, and retained fitness history. It should not be described as tournament selection, multipoint crossover, or Pareto-based selection unless those operators are separately implemented.
+:::
 
 ---
 
@@ -212,8 +214,9 @@ F(C) = (I_S - R_A) / I_S
 
 The function compares the aggregate residual severity against the aggregate attack-impact measure. Under this definition, a lower aggregate residual severity relative to the impact measure produces a higher fitness value.
 
-> [!NOTE]
-> **Scope of Evaluation:** The formula should be interpreted according to the project's specified score normalization and input constraints. The RS values supplied to this calculation must use the scale expected by the implemented configuration. The fitness function does not include explicit deployment cost, operational overhead, or coverage objectives.
+:::note[Scope of Evaluation]
+The formula should be interpreted according to the project's specified score normalization and input constraints. The RS values supplied to this calculation must use the scale expected by the implemented configuration. The fitness function does not include explicit deployment cost, operational overhead, or coverage objectives.
+:::
 
 ---
 

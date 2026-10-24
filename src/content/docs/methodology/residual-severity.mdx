@@ -26,8 +26,9 @@ Manually assessing every attack–defense combination can be time-consuming, par
 
 In this project, the LLM evaluates the relationship between an observed attack behavior and a candidate defense. It considers the defensive action, the relevant artifacts and behavior, and the attack severity information provided as input.
 
-> [!IMPORTANT]
-> **Prediction vs. Verified Risk:** The output represents an estimate of the severity that may remain after considering the defense. It is not automatically a verified risk value, and the model must not assume that a mapped defense completely mitigates an attack merely because the two are ontologically related.
+:::note[Prediction vs. Verified Risk]
+The output represents an estimate of the severity that may remain after considering the defense. It is not automatically a verified risk value, and the model must not assume that a mapped defense completely mitigates an attack merely because the two are ontologically related.
+:::
 
 The RS estimate serves two core roles in the overall framework:
 
@@ -59,8 +60,9 @@ For each experimental run, the following execution settings are documented:
 | **Reproducibility Settings** | Random seeds and generation hyperparameters. |
 | **Execution Metadata** | Timestamp, inference latency, token usage, and API response status. |
 
-> [!TIP]
-> **Comparative Experimental Protocol:** When comparing models, both models must receive identical sample evidence, initial severity, attack artifacts, defense information, and equivalent reasoning instructions. The model identifier and configuration used for each run must be retained with the results.
+:::tip[Comparative Experimental Protocol]
+When comparing models, both models must receive identical sample evidence, initial severity, attack artifacts, defense information, and equivalent reasoning instructions. The model identifier and configuration used for each run must be retained with the results.
+:::
 
 ---
 
@@ -171,8 +173,9 @@ The assessment evaluates five core factors:
 4. The attack capability that may remain after considering the defense.
 5. Uncertainty resulting from missing information or limitations of the mapping.
 
-> [!CAUTION]
-> **No Predefined Numerical Reductions:** The project must not translate defense categories into fixed numerical reductions (e.g., deducting 10 points for "Harden"). The LLM returns the RS value directly based on contextual evidence, while the evaluator validates the result against the permitted severity range.
+:::caution[No Predefined Numerical Reductions]
+The project must not translate defense categories into fixed numerical reductions (e.g., deducting 10 points for "Harden"). The LLM returns the RS value directly based on contextual evidence, while the evaluator validates the result against the permitted severity range.
+:::
 
 Where the implementation uses categorical mitigation labels (e.g., `NONE`, `PARTIAL`, `FULL`), these labels describe the assessed mitigation outcome. Their definitions and allowed values must match the actual implementation. They should not be treated as a substitute for validating the numerical RS estimate.
 
@@ -196,8 +199,9 @@ The model returns a structured JSON response containing the predicted RS and a c
 }
 ```
 
-> [!NOTE]
-> **Confidence Interval Guideline:** Numerical fields are populated from the actual input and model prediction. A numerical confidence interval should not be included unless the system has a defined method for calculating and validating such intervals; a model-generated statement of confidence is not a statistically calibrated interval.
+:::note[Confidence Interval Guideline]
+Numerical fields are populated from the actual input and model prediction. A numerical confidence interval should not be included unless the system has a defined method for calculating and validating such intervals; a model-generated statement of confidence is not a statistically calibrated interval.
+:::
 
 ---
 
@@ -215,8 +219,9 @@ The validation pipeline enforces seven checks:
 6. **Provenance Check:** Confirm that referenced defense information is consistent with the supplied input.
 7. **Error Logging:** Record invalid outputs, provider errors, and failed correction attempts.
 
-> [!CAUTION]
-> **No Silent Clamping:** If a response is invalid, the system may request a limited correction according to the experimental protocol. It must **not** silently clamp an out-of-bounds prediction (e.g., rounding an invalid $RS > IS$ down to $IS$), as doing so would conceal model reasoning failures.
+:::caution[No Silent Clamping]
+If a response is invalid, the system may request a limited correction according to the experimental protocol. It must **not** silently clamp an out-of-bounds prediction (e.g., rounding an invalid $RS > IS$ down to $IS$), as doing so would conceal model reasoning failures.
+:::
 
 Successful structural validation establishes that the output conforms to the schema; it does not prove that the predicted severity is empirically correct.
 

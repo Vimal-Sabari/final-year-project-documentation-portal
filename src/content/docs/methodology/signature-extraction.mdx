@@ -31,8 +31,9 @@ The processing workflow consists of the following steps:
 4. **Extract signature attributes:** Obtain available information such as signature name, severity score, and mark count.
 5. **Prepare structured records:** Organize the extracted information for subsequent attack characterization and defense evaluation.
 
-> [!IMPORTANT]
-> **Explicit Missing-Field Handling:** The processing module should handle missing fields and incomplete reports explicitly. An absent field must not automatically be interpreted as evidence that a behavior did not occur.
+:::note[Explicit Missing-Field Handling]
+The processing module should handle missing fields and incomplete reports explicitly. An absent field must not automatically be interpreted as evidence that a behavior did not occur.
+:::
 
 ---
 
@@ -86,8 +87,9 @@ For example, a signature that monitors memory allocation and protection operatio
 
 The extracted evidence is subsequently used to associate observed behavior with relevant MITRE ATT&CK techniques. The mapping should be based on the behavior and available supporting evidence rather than relying exclusively on an API name or signature description.
 
-> [!NOTE]
-> **Observation Boundary:** The exact APIs and behavioral fields available depend on the report and configured analysis components. The project does not assume that every signature contains a complete API sequence or all relevant execution arguments.
+:::note[Observation Boundary]
+The exact APIs and behavioral fields available depend on the report and configured analysis components. The project does not assume that every signature contains a complete API sequence or all relevant execution arguments.
+:::
 
 ---
 
@@ -147,10 +149,11 @@ A conceptual JSON structure is shown below. The field names are illustrative; th
 }
 ```
 
-> [!NOTE]
-> **Schema Integrity:** The `null` values and empty arrays are placeholders, not actual observations. Optional fields should be populated only when the source report contains the corresponding information.
-> 
-> ATT&CK technique identifiers and defense mappings are produced or associated in subsequent stages of the workflow. They should not be presented as directly extracted ground-truth values unless the mapping has actually been performed.
+:::note[Schema Integrity]
+The `null` values and empty arrays are placeholders, not actual observations. Optional fields should be populated only when the source report contains the corresponding information.
+
+ATT&CK technique identifiers and defense mappings are produced or associated in subsequent stages of the workflow. They should not be presented as directly extracted ground-truth values unless the mapping has actually been performed.
+:::
 
 ---
 
@@ -180,8 +183,9 @@ The output contains the extracted sample metadata and triggered signatures. Thes
 
 A separate mapping stage associates the observed behavior with MITRE ATT&CK techniques and identifies candidate defensive mechanisms through the project's ATT&CK–D3FEND mapping process.
 
-> [!NOTE]
-> **Experimental Data Notice:** No example signature values or API sequences are presented as actual experimental observations here. A real input/output example can be added using a sanitized Cuckoo report from the project's dataset.
+:::note[Experimental Data Notice]
+No example signature values or API sequences are presented as actual experimental observations here. A real input/output example can be added using a sanitized Cuckoo report from the project's dataset.
+:::
 
 ---
 

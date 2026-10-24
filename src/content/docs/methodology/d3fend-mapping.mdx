@@ -15,8 +15,9 @@ MITRE D3FEND is a cybersecurity knowledge base that organizes defensive techniqu
 
 In this project, D3FEND supports the identification of candidate defensive mechanisms for the behaviors extracted from Cuckoo Sandbox reports and mapped to MITRE ATT&CK techniques. The resulting defense information is used by the LLM-based residual-severity evaluator to assess attack–defense combinations and by the CCEA module to search for effective defense combinations.
 
-> [!IMPORTANT]
-> **Candidate Identification vs. Guaranteed Mitigation:** The mapping stage identifies candidate defenses; it does not independently establish that a defense will completely mitigate an attack. This distinction is critical because the effectiveness of a defensive mechanism depends on the behavior being addressed, deployment context, and specific defense configuration.
+:::note[Candidate Identification vs. Guaranteed Mitigation]
+The mapping stage identifies candidate defenses; it does not independently establish that a defense will completely mitigate an attack. This distinction is critical because the effectiveness of a defensive mechanism depends on the behavior being addressed, deployment context, and specific defense configuration.
+:::
 
 ---
 
@@ -59,8 +60,9 @@ D3FEND organizes defensive techniques into primary functional categories:
   </div>
 </div>
 
-> [!NOTE]
-> **Functional Categories vs. Severity Values:** The categories describe different defensive functions. They should not be interpreted as fixed severity-reduction levels because D3FEND does not assign numerical residual-severity values or rank defenses by effectiveness [2].
+:::note[Functional Categories vs. Severity Values]
+The categories describe different defensive functions. They should not be interpreted as fixed severity-reduction levels because D3FEND does not assign numerical residual-severity values or rank defenses by effectiveness [2].
+:::
 
 ---
 
@@ -115,13 +117,13 @@ For the project, the mapping data preserve the exact relationship label and arti
 
 *Source: Official MITRE D3FEND technique pages [3], [4]. These rows illustrate documented relationships; they do not establish that the corresponding defense mitigates every attack involving the listed artifact.*
 
-> [!NOTE]
-> **Conceptual Distinctions:**
-> - **Digital artifact:** Identifies the system component associated with the defense.
-> - **Relationship:** Describes how the defensive technique acts on or relates to that component.
-> - **Mitigation assessment:** Determines whether and to what extent that defensive action affects a particular attack behavior.
-> 
-> *For example, System Call Filtering is related to both processes and system calls. Whether it reduces the effectiveness of a particular memory-manipulation behavior depends on the filtering policy and the relevant operations. The relationship alone does not establish that all such operations are blocked.*
+:::note[Conceptual Distinctions]
+- **Digital artifact:** Identifies the system component associated with the defense.
+- **Relationship:** Describes how the defensive technique acts on or relates to that component.
+- **Mitigation assessment:** Determines whether and to what extent that defensive action affects a particular attack behavior.
+
+*For example, System Call Filtering is related to both processes and system calls. Whether it reduces the effectiveness of a particular memory-manipulation behavior depends on the filtering policy and the relevant operations. The relationship alone does not establish that all such operations are blocked.*
+:::
 
 ---
 
@@ -138,8 +140,9 @@ These relationships serve different purposes. The first helps identify candidate
 
 The resulting structured data are supplied to the LLM-based residual-severity evaluator together with relevant attack information and initial severity. The evaluator considers the defense in the context of the observed behavior and returns an RS estimate for use by the optimization stage.
 
-> [!CAUTION]
-> **Evolving Knowledge Graph Status:** D3FEND's related-offensive-technique mappings may include inferred or experimental relationships. MITRE notes that the knowledge graph continues to evolve and that such relationships should not automatically be interpreted as proof of operational effectiveness [2]. The project therefore treats mapped defenses as candidates that require contextual assessment rather than guaranteed countermeasures.
+:::caution[Evolving Knowledge Graph Status]
+D3FEND's related-offensive-technique mappings may include inferred or experimental relationships. MITRE notes that the knowledge graph continues to evolve and that such relationships should not automatically be interpreted as proof of operational effectiveness [2]. The project therefore treats mapped defenses as candidates that require contextual assessment rather than guaranteed countermeasures.
+:::
 
 ---
 
@@ -170,8 +173,9 @@ The following checks are enforced within the mapping pipeline:
 - [x] Mark manually curated overrides separately from authoritative mappings.
 - [x] Prevent the LLM from introducing unsupported defense relationships into the evidence record.
 
-> [!TIP]
-> **Experiment Pinning:** The project should pin its selected D3FEND data snapshot to an experiment. This avoids silent changes to the mapping data between benchmark runs.
+:::tip[Experiment Pinning]
+The project should pin its selected D3FEND data snapshot to an experiment. This avoids silent changes to the mapping data between benchmark runs.
+:::
 
 ---
 
@@ -184,8 +188,9 @@ The following checks are enforced within the mapping pipeline:
 5. **Defensive Effectiveness Depends on Configuration:** The operation of a defense may depend on its implementation, policy, deployment mode, and operating environment. A candidate defense may be technically relevant but insufficiently configured or too restrictive for a particular environment.
 6. **Source Data May Evolve:** D3FEND's techniques and relationships are updated over time. Reproducible experiments should record the version or snapshot used to construct the project mapping data and preserve any manual changes made during the study.
 
-> [!NOTE]
-> **Separation Rationale:** These limitations motivate the separation between defense mapping and residual-severity estimation. The mapping stage provides structured defensive evidence, while the LLM-based evaluator assesses its likely relevance to the specific observed attack behavior.
+:::note[Separation Rationale]
+These limitations motivate the separation between defense mapping and residual-severity estimation. The mapping stage provides structured defensive evidence, while the LLM-based evaluator assesses its likely relevance to the specific observed attack behavior.
+:::
 
 ---
 

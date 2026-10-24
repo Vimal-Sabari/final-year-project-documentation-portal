@@ -35,8 +35,9 @@ The project uses the MITRE ATT&CK Enterprise knowledge base to characterize rans
 | **[T1490](https://attack.mitre.org/techniques/T1490/)** | Inhibit System Recovery | Impact | Deleting recovery information or disabling recovery mechanisms (e.g., volume shadow copies) [3]. |
 | **[T1055.012](https://attack.mitre.org/techniques/T1055/012/)** | Process Injection: Process Hollowing | Stealth; Privilege Escalation | Replacing the contents of a suspended process with malicious code [4]. |
 
-> [!NOTE]
-> **Observation Context:** These examples illustrate the types of behaviors that can be represented using ATT&CK. They are not claims that every analyzed sample exhibits these techniques. The exact mapping depends on the evidence extracted from the corresponding analysis report.
+:::note[Observation Context]
+These examples illustrate the types of behaviors that can be represented using ATT&CK. They are not claims that every analyzed sample exhibits these techniques. The exact mapping depends on the evidence extracted from the corresponding analysis report.
+:::
 
 ---
 
@@ -53,8 +54,9 @@ The process follows these steps:
 4. **Record the mapping:** The resulting mapping records the signature, the observed behavior, the ATT&CK technique identifier, the technique name, and the associated tactic or tactics. Supporting evidence should be retained so that the mapping can be reviewed.
 5. **Pass the mapping to defense analysis:** The mapped technique is passed to the project's ATT&CK–D3FEND defense-mapping process, which identifies candidate defensive mechanisms for subsequent attack–defense evaluation.
 
-> [!IMPORTANT]
-> **Many-to-Many Mapping Relationships:** A signature does not necessarily correspond to exactly one ATT&CK technique. Depending on the behavior observed, a signature may support multiple technique mappings, while several signatures may provide evidence for the same technique.
+:::note[Many-to-Many Mapping Relationships]
+A signature does not necessarily correspond to exactly one ATT&CK technique. Depending on the behavior observed, a signature may support multiple technique mappings, while several signatures may provide evidence for the same technique.
+:::
 
 ---
 
@@ -101,8 +103,9 @@ The evidence available varies by sample and sandbox configuration. A single API 
 
 For example, `NtUnmapViewOfSection` may be relevant to process hollowing, but the API call alone does not establish the entire process-hollowing behavior. Additional evidence of suspended process creation, memory replacement, and subsequent execution would provide stronger support.
 
-> [!CAUTION]
-> **Scientific Integrity Rule:** The project uses observed behavior and relevant technical evidence to establish the mapping. It does not assume that a mapping is correct merely because an API name appears in a signature.
+:::caution[Scientific Integrity Rule]
+The project uses observed behavior and relevant technical evidence to establish the mapping. It does not assume that a mapping is correct merely because an API name appears in a signature.
+:::
 
 ---
 
@@ -118,8 +121,9 @@ The following examples demonstrate how observed behavior can be associated with 
 | Behavior involving encryption of files to make data inaccessible. | **T1486 — Data Encrypted for Impact** | Impact | Observed file modification or encryption-related behavior consistent with data encryption for impact [2]. |
 | Creation of a suspended process followed by memory unmapping, replacement with malicious code, and resumption of execution. | **T1055.012 — Process Injection: Process Hollowing** | Stealth; Privilege Escalation | A sequence of process creation, memory manipulation, and execution events consistent with process hollowing [4]. |
 
-> [!NOTE]
-> **Resolution Criteria:** The mappings are based on the behavior described, not merely on the presence of an API or a signature name. If the collected evidence is insufficient to distinguish a technique from other possible explanations, the mapping should remain unresolved or be marked for review.
+:::note[Resolution Criteria]
+The mappings are based on the behavior described, not merely on the presence of an API or a signature name. If the collected evidence is insufficient to distinguish a technique from other possible explanations, the mapping should remain unresolved or be marked for review.
+:::
 
 ---
 
@@ -133,8 +137,9 @@ ATT&CK mapping provides a standardized interpretation of observed behavior, but 
 4. **Limits of the technique taxonomy:** ATT&CK provides a structured taxonomy of adversarial behavior, but the available technique descriptions do not necessarily capture every implementation detail observed during dynamic analysis. The project's mapping process must therefore preserve relevant evidence instead of treating the technique identifier as a complete representation of the behavior.
 5. **Mapping does not establish mitigation effectiveness:** Identifying an ATT&CK technique does not establish which defense will successfully stop it. The project's downstream D3FEND mapping identifies candidate defensive mechanisms, while LLM-based residual-severity estimation evaluates the likely effect of a candidate defense on the observed behavior.
 
-> [!NOTE]
-> **Evaluation Separation:** Mapping accuracy and residual-severity accuracy are separate evaluation concerns. A correct ATT&CK mapping supports the subsequent stages but does not, by itself, guarantee a correct defense recommendation.
+:::note[Evaluation Separation]
+Mapping accuracy and residual-severity accuracy are separate evaluation concerns. A correct ATT&CK mapping supports the subsequent stages but does not, by itself, guarantee a correct defense recommendation.
+:::
 
 ---
 

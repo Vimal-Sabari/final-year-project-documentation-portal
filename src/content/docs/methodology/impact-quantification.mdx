@@ -17,10 +17,11 @@ The project uses the **MAGIC** impact-quantification approach, which combines in
 
 The resulting impact scores are used by the subsequent attack–defense evaluation and CCEA-based optimization stages.
 
-> [!NOTE]
-> **Functional Separation:** Signature impact quantification and residual-severity estimation perform distinct functions:
-> - **Signature Impact Quantification:** Quantifies the standalone attack impact associated with an observed behavioral signature across the repository.
-> - **Residual-Severity Estimation:** Evaluates the severity remaining when a specific candidate defensive mechanism is applied against that signature.
+:::note[Functional Separation]
+Signature impact quantification and residual-severity estimation perform distinct functions:
+- **Signature Impact Quantification:** Quantifies the standalone attack impact associated with an observed behavioral signature across the repository.
+- **Residual-Severity Estimation:** Evaluates the severity remaining when a specific candidate defensive mechanism is applied against that signature.
+:::
 
 ---
 
@@ -53,8 +54,9 @@ Each signature is initially placed into a band according to its malware-analysis
 
 For the ransomware implementation, the project uses a score range of **[1, 35]**. This range was selected based on the central tendency and statistical dispersion of the behaviors represented in the repository.
 
-> [!IMPORTANT]
-> **Algorithmic Boundary Rule:** The exact numerical boundaries between severity bands and the detailed ranking procedure follow the implemented algorithm. They should not be inferred solely from categorical labels.
+:::note[Algorithmic Boundary Rule]
+The exact numerical boundaries between severity bands and the detailed ranking procedure follow the implemented algorithm. They should not be inferred solely from categorical labels.
+:::
 
 The output of this pass is the initial impact score assigned to each signature.
 
@@ -68,8 +70,9 @@ The project's implementation uses four bands, but their precise boundaries must 
 
 The use of bands helps organize signatures with different severity values and supports relative ranking within a band. The subsequent refinement stage considers signature co-occurrence information to determine whether the initial score should be updated.
 
-> [!TIP]
-> **Experimental Consistency:** The score range and its band boundaries should remain consistent with the configuration used for the experiment. Any changes to the range or band-assignment procedure must be documented so that the resulting scores remain reproducible.
+:::tip[Experimental Consistency]
+The score range and its band boundaries should remain consistent with the configuration used for the experiment. Any changes to the range or band-assignment procedure must be documented so that the resulting scores remain reproducible.
+:::
 
 ---
 
@@ -89,8 +92,9 @@ The co-occurrence stage performs the following operations:
 4. **Cross-reference knowledge base:** Align behavioral combinations against the existing ransomware knowledge base.
 5. **Supply refinement parameters:** Feed aggregated co-occurrence values to the mutual-information refinement stage.
 
-> [!CAUTION]
-> **Correlation vs. Causation:** Co-occurrence indicates that signatures appear together in the analyzed data; it does not by itself establish that one behavior causes another. The information is used to refine signature impact scores rather than to infer unsupported causal relationships.
+:::caution[Correlation vs. Causation]
+Co-occurrence indicates that signatures appear together in the analyzed data; it does not by itself establish that one behavior causes another. The information is used to refine signature impact scores rather than to infer unsupported causal relationships.
+:::
 
 ---
 
@@ -119,8 +123,9 @@ The method follows seven structured steps:
 6. Apply the implemented score-update procedure when the threshold condition is met; otherwise, retain the existing score.
 7. Return the refined signature impact scores.
 
-> [!NOTE]
-> **Mathematical Integrity Notice:** The exact mutual-information formula, aggregation procedure, dynamic-threshold calculation, and score-update equation must be documented from the actual MAGIC formulation and the project's implementation. They are not fully specified in preliminary presentation notes and should not be replaced with an assumed arbitrary non-linear discounting function.
+:::note[Mathematical Integrity Notice]
+The exact mutual-information formula, aggregation procedure, dynamic-threshold calculation, and score-update equation must be documented from the actual MAGIC formulation and the project's implementation. They are not fully specified in preliminary presentation notes and should not be replaced with an assumed arbitrary non-linear discounting function.
+:::
 
 ---
 
@@ -307,5 +312,6 @@ The impact-quantification method depends on the quality and coverage of the coll
 3. **Correlation vs. Causation:** Co-occurrence indicates empirical correlation across runtime traces; it does not establish deterministic causal dependencies between attack stages.
 4. **Scope Limitation:** A refined impact score represents the standalone behavioral significance of an attack signature; it does not measure the severity remaining after a defense is applied.
 
-> [!NOTE]
-> **Evaluation Separation:** In this project, refined impact scores are combined with separately estimated residual-severity values during defense-combination evaluation. This clear separation allows the impact-quantification stage and the LLM-based residual-severity stage to be assessed independently according to their respective objectives.
+:::note[Evaluation Separation]
+In this project, refined impact scores are combined with separately estimated residual-severity values during defense-combination evaluation. This clear separation allows the impact-quantification stage and the LLM-based residual-severity stage to be assessed independently according to their respective objectives.
+:::
