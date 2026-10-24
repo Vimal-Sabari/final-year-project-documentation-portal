@@ -1,107 +1,415 @@
 ---
 title: "Cooperative Co-Evolutionary Algorithm"
-description: "Cooperative co-evolutionary optimization formulation for evolving adversarial attack vectors and adaptive defensive countermeasure portfolios."
+description: "Optimization component evaluating candidate combinations of defensive mechanisms using attack-signature impact scores and LLM residual-severity estimates."
 ---
 
 import PageIntro from '../../../components/PageIntro.astro';
 import WorkflowDiagram from '../../../components/WorkflowDiagram.astro';
 
 <PageIntro 
-  subtitle="Mathematical formulation and algorithmic mechanics of the Cooperative Co-Evolutionary Algorithm (CCEA) for defense optimization." 
-  note="Research content will be added. Placeholders for fitness formulations, hyperparameter tables, and pseudocode are staged below without fabricated equations."
+  subtitle="Optimization component evaluating candidate combinations of defensive mechanisms using attack-signature impact scores and LLM residual-severity estimates." 
+  note="CCEA guides the search across candidate defense pools using exploration, best-so-far tracking, and mutation to identify high-fitness countermeasure combinations without exhaustive combinatorial enumeration."
 />
+
+The Cooperative Co-Evolutionary Algorithm (CCEA) is the optimization component of the proposed ransomware defense framework. It evaluates candidate combinations of defensive mechanisms and searches for a combination that reduces the estimated severity of the observed attack behaviors.
+
+In this project, CCEA uses attack-signature impact scores and LLM-generated residual-severity (RS) estimates to evaluate candidate defense combinations. It generates alternatives through exploration and mutation, evaluates each combination using a fitness function, and retains the best solution found during the search.
+
+The optimization process is designed to avoid exhaustive enumeration of every possible defense combination. Its output is the recommended defense combination identified under the configured candidate pools, fitness function, and stopping conditions.
+
+---
 
 ## Optimization Objective
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Mathematical multi-objective optimization problem formulation minimizing total residual severity and defensive deployment overhead while maximizing coverage breadth.</div>
-</div>
+The objective is to identify a defense combination that performs well according to the project's severity-based fitness function.
 
-*Content to be supplied: Formal definition of Pareto objective functions:*
+Let `N` denote the number of attack signatures associated with the evaluated sample. Each signature `k` has an associated attack-impact score `A_k`, a residual-severity estimate `RS_k`, and a pool of candidate defenses `P_k`.
+
+A candidate defense combination is represented as:
 
 ```text
-min F(D) = [ f_residual(D, A), f_cost(D), -f_coverage(D) ]^T
+C = { d_1, d_2, ..., d_N }
 ```
+
+where `d_k` is the selected defense for signature `k`.
+
+The objective is to find a candidate combination `C*` with a high fitness value:
+
+```text
+C* = argmax_{C in C_space} F(C)
+```
+
+Here, `C_space` is the space of candidate defense combinations and `F(C)` is the fitness calculated by the project's evaluation procedure.
+
+The fitness function compares aggregate attack-impact scores with the corresponding aggregate residual-severity estimates. A higher fitness value indicates a larger reduction between the normalized aggregate attack impact and the normalized aggregate residual severity, according to the defined formula.
+
+> [!NOTE]
+> **Single-Objective Formulation:** The current implementation focuses on this severity-based objective. Deployment cost, performance overhead, and coverage breadth are not included as separate objective functions in the documented fitness formula. Likewise, the algorithm does not currently establish a Pareto-optimal portfolio or guarantee a globally optimal solution.
+
+---
 
 ## Attack and Defense Representations
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Chromosome encoding schemes, binary bitstrings, integer alleles, and graph gene representations for attack and defense populations.</div>
-</div>
+The optimization process represents the observed attack behavior through a set of signatures and their associated impact scores. Each signature is associated with a pool of candidate defenses derived from the project's attack–defense mapping process.
 
-*Content to be supplied: Formal genotype-to-phenotype mapping rules for defense chromosomes and evasive attack variants.*
+### Attack Representation
+
+The attack-side information consists of the signatures triggered during malware analysis and the impact scores assigned to those signatures.
+
+For each signature `k`, the optimization process uses:
+
+- The signature identifier or associated behavior.
+- The raw attack-impact score `A_k`.
+- The candidate defense pool `P_k`.
+- The RS estimate associated with an evaluated defense choice.
+
+The attack signatures provide the scenarios against which candidate defenses are evaluated. The documented CCEA procedure does not independently evolve a population of new ransomware strains or attack variants.
+
+### Defense Representation
+
+Each signature is associated with a candidate defense pool:
+
+```text
+P_k = { d_{k,1}, d_{k,2}, ..., d_{k,m_k} }
+```
+
+where `m_k` is the number of candidate defenses available for signature `k`.
+
+A candidate combination selects one defense from each relevant pool:
+
+```text
+C = { d_1, d_2, ..., d_N }, where d_k in P_k
+```
+
+The combination is evaluated using the impact scores and RS estimates associated with its selected defenses.
+
+The optimization is constrained by the available defense pools. A defense that is absent from the corresponding pool cannot be selected by the algorithm.
+
+---
 
 ## Candidate Combination Generation
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Pairing protocols between attack subpopulation individuals and defense subpopulation candidates for combinatorial fitness evaluation.</div>
-</div>
+Candidate combination generation constructs a defense combination by selecting one candidate defense for each signature.
 
-*Content to be supplied: Subpopulation collaboration strategies (all-vs-best, sample-based pairing, round-robin tournaments).*
+For every signature-associated defense pool `P_k`, the algorithm uses the following procedure:
+
+1. **Untried-defense selection:** If the pool contains a defense that has not been evaluated, select an untried defense.
+2. **Exploration:** If all available defenses have been tried, select a random defense with the configured exploration probability (`p_e`).
+3. **Best-so-far selection:** Otherwise, select the defense with the highest average fitness recorded so far.
+4. **Mutation:** With the configured mutation probability (`p_m`), replace the selected defense with a different random candidate from the same pool.
+5. **Combination assembly:** Add the selected defense to the candidate combination.
+
+The process is repeated across the signature-associated pools to construct a complete candidate defense combination.
+
+This strategy balances the exploration of alternatives with the reuse of defensive choices that have performed well in earlier evaluations. It also encourages the algorithm to evaluate candidates that have not yet been considered.
+
+---
 
 ## Selection and Variation
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Genetic operators including tournament selection, multi-point crossover, bit-flip mutation, and elitism preservation rules.</div>
-</div>
+Selection and variation guide the search toward defense combinations with higher fitness.
 
-*Content to be supplied: Detailed operator mechanics and genetic diversity maintenance algorithms.*
+### Selection
+
+The algorithm records fitness information for evaluated candidates. For each defense, the implementation maintains a history of fitness values from the combinations in which it has participated.
+
+The best-so-far defense for a pool is selected using the highest average fitness recorded for that defense. This provides a basis for reusing previously promising choices.
+
+### Exploration
+
+Exploration introduces alternative defensive mechanisms into the candidate combination. When the exploration condition is met, the algorithm chooses a random defense from the relevant candidate pool.
+
+This helps reduce dependence on the choices that have performed best so far and allows other available candidates to be evaluated.
+
+### Mutation
+
+Mutation replaces a selected defense with a different random defense from its candidate pool, according to the configured mutation probability (`p_m`).
+
+Mutation allows the algorithm to evaluate new combinations that differ from previously selected candidates.
+
+### Preservation of the Best Candidate
+
+After evaluating a combination, the decision-making component compares its fitness with the best fitness retained from previous generations. If the candidate satisfies the configured improvement condition, it replaces the stored best solution.
+
+This mechanism retains the best candidate found so far even when subsequent combinations do not improve upon it.
+
+> [!CAUTION]
+> **Implementation Scope:** The documented selection process uses exploration, best-so-far choices, mutation, and retained fitness history. It should not be described as tournament selection, multipoint crossover, or Pareto-based selection unless those operators are separately implemented.
+
+---
 
 ## Fitness Evaluation
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Joint fitness calculation integrating LLM residual scores, empirical signature weights, and performance penalties.</div>
-</div>
+Fitness evaluation measures the quality of a candidate defense combination using the attack-impact scores and the corresponding residual-severity estimates.
 
-<div class="equation-placeholder">
-  [Formal Equation Placeholder: Joint Multi-Objective Fitness Evaluation Function to be inserted]
-</div>
+The Phase 2 implementation uses the following quantities:
 
-*Content to be supplied: Mathematical formulation of fitness penalty functions for budget and latency constraints.*
+- `A_k`: Raw attack-impact score for signature `k`.
+- `RS_k`: Raw residual-severity estimate for signature `k` under the selected defense.
+- `A_max`: Maximum attack-impact score, set to 35 in the documented configuration.
+- `RS_max`: Maximum residual-severity value used for normalization, set to 10 in the documented configuration.
+- `epsilon`: Minimum mapped attack-severity value, set to 0.03.
+
+### Step 1: Normalize the Attack-Impact Score
+
+The attack-impact score is mapped to a normalized value:
+
+```text
+AM_k = epsilon + (1 - epsilon) * ((A_k - 1) / (A_max - 1))
+```
+
+Using the documented configuration:
+
+```text
+A_max = 35,  epsilon = 0.03
+```
+
+The transformation maps the configured attack-impact range to a normalized scale with a non-zero lower bound.
+
+### Step 2: Normalize Residual Severity
+
+The residual-severity estimate is normalized as follows:
+
+```text
+RM_k = RS_k / RS_max
+```
+
+where the documented configuration uses:
+
+```text
+RS_max = 10
+```
+
+The resulting value expresses residual severity relative to the maximum value used by the fitness calculation.
+
+### Step 3: Calculate Aggregate Attack Severity
+
+The aggregate attack-impact measure is calculated using the root mean square (RMS) of the normalized attack-impact scores:
+
+```text
+I_S = sqrt((1 / N) * sum_{k=1}^{N} (AM_k)^2)
+```
+
+This measure aggregates the impact scores of the `N` signatures represented in the candidate combination.
+
+### Step 4: Calculate Aggregate Residual Severity
+
+The aggregate residual-severity measure is calculated using the RMS of the normalized residual-severity values:
+
+```text
+R_A = sqrt((1 / N) * sum_{k=1}^{N} (RM_k)^2)
+```
+
+This represents the aggregate normalized residual severity associated with the candidate combination.
+
+### Step 5: Calculate Fitness
+
+The candidate fitness is calculated as:
+
+```text
+F(C) = (I_S - R_A) / I_S
+```
+
+The function compares the aggregate residual severity against the aggregate attack-impact measure. Under this definition, a lower aggregate residual severity relative to the impact measure produces a higher fitness value.
+
+> [!NOTE]
+> **Scope of Evaluation:** The formula should be interpreted according to the project's specified score normalization and input constraints. The RS values supplied to this calculation must use the scale expected by the implemented configuration. The fitness function does not include explicit deployment cost, operational overhead, or coverage objectives.
+
+---
 
 ## Comparator and Stopping Criteria
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Convergence thresholds, maximum generation limits, Pareto frontier hypervolume stabilization, and diversity metrics.</div>
-</div>
+The comparator maintains the best combination `C*` and its associated fitness `F*` across successive generations.
 
-*Content to be supplied: Algorithmic stopping rules and Pareto dominance sorting criteria.*
+For each candidate combination, the decision-making component compares its fitness with the stored best fitness:
 
-## Algorithmic Workflow & Pseudocode
+- **If `F(C) > F* + delta`:** The candidate becomes the new best solution (`C* <- C`, `F* <- F(C)`), and the counter of generations without improvement is reset to 0.
+- **Otherwise:** The counter of generations without improvement is incremented by 1.
 
-Below is the formal pseudocode structure detailing the CCEA execution loop:
+The project uses a minimum improvement threshold `delta` and a patience parameter `tau`. The documented stopping configuration requires that all defense candidates have been tried and that the number of generations without sufficient improvement reaches the patience limit. The search is also bounded by the configured maximum generation count `G_max`.
+
+### CCEA Parameter Configuration
+
+The following hyperparameter settings are reported from the project implementation:
+
+| Parameter | Symbol | Value | Purpose |
+|:---|:---:|---:|:---|
+| **Random seed** | — | 42 | Supports deterministic reproducibility of randomized choices. |
+| **Maximum generations** | `G_max` | 100 | Bounding ceiling for the search loop. |
+| **Exploration probability** | `p_e` | 0.25 | Controls selection of a random defense during exploration. |
+| **Mutation probability** | `p_m` | 0.20 | Controls replacement of a selected defense with another candidate. |
+| **Patience** | `tau` | 20 | Maximum number of generations without improvement before stopping. |
+| **Minimum improvement** | `delta` | 10⁻⁸ | Determines the minimum fitness gain considered an improvement. |
+| **Minimum mapped attack severity** | `epsilon` | 0.03 | Establishes the lower bound used in attack-impact normalization. |
+| **Maximum attack-impact score** | `A_max` | 35 | Upper bound used by attack-impact normalization. |
+| **Maximum RS value** | `RS_max` | 10 | Value used to normalize residual severity in the fitness calculation. |
+
+---
+
+## Algorithmic Workflow and Pseudocode
 
 ```text
-Algorithm: Cooperative Co-Evolutionary Defense Optimization (CCEA)
+Algorithm: CCEA-Based Defense Combination Optimization
 Input:
-  - Attack Population Size N_a, Defense Population Size N_d
-  - Max Generations G_max
-  - Genetic Operators (Crossover_Rate, Mutation_Rate, Tournament_Size)
+  - P_1, P_2, ..., P_N: Candidate defense pools associated with attack signatures
+  - A_1, A_2, ..., A_N: Raw attack-impact scores
+  - RS_k: Residual-severity estimate for each evaluated signature–defense pair
+  - p_e: Exploration probability (0.25)
+  - p_m: Mutation probability (0.20)
+  - G_max: Maximum number of generations (100)
+  - delta: Minimum fitness improvement (1e-8)
+  - tau: Patience limit (20)
 Output:
-  - Pareto-Optimal Defense Portfolio D*
+  - C*: Best defense combination found
+  - F*: Fitness of the retained best combination
 
 Procedure:
-  1. Initialize attack population P_a(0) and defense population P_d(0)
-  2. For generation g = 0 to G_max:
-       a. [Pseudocode step: Form candidate collaboration pairs (a_i, d_j)]
-       b. [Pseudocode step: Query residual severity and compute fitness for each individual]
-       c. [Pseudocode step: Perform Pareto non-dominated sorting and crowding distance calculation]
-       d. [Pseudocode step: Select parents via tournament selection]
-       e. [Pseudocode step: Apply crossover and mutation to generate offspring]
-       f. [Pseudocode step: Check convergence / hypervolume stability]
-  3. Extract non-dominated front and return D*
+  1. Initialize the random-number generator using seed 42.
+  2. Initialize fitness history for candidate defenses across all pools.
+  3. Set best combination C* and best fitness F* to initial empty states.
+  4. For generation g = 1 to G_max:
+       a. Initialize empty candidate combination C = {}.
+       b. For each signature-associated defense pool P_k:
+            - If pool contains an untried defense:
+                Select untried defense d_k.
+            - Else if random() < p_e:
+                Select random defense d_k from P_k.
+            - Else:
+                Select defense d_k with highest average historical fitness in P_k.
+            - If random() < p_m:
+                Replace d_k with a different random candidate from P_k.
+            - Add d_k to C.
+       c. Obtain RS estimates required to evaluate candidate combination C.
+       d. Normalize attack-impact scores: AM_k = epsilon + (1 - epsilon) * (A_k - 1) / (A_max - 1)
+       e. Normalize residual-severity values: RM_k = RS_k / RS_max
+       f. Calculate aggregate attack severity: I_S = sqrt(mean(AM_k^2))
+       g. Calculate aggregate residual severity: R_A = sqrt(mean(RM_k^2))
+       h. Compute candidate fitness: F(C) = (I_S - R_A) / I_S
+       i. Update fitness history for all defenses included in C.
+       j. If C is first candidate or F(C) > F* + delta:
+            C* = C
+            F* = F(C)
+            no_improvement_counter = 0
+          Else:
+            no_improvement_counter += 1
+       k. If all candidates tried AND no_improvement_counter >= tau:
+            Break loop (patience reached).
+  5. Return retained best combination C* and fitness F*.
 ```
+
+---
+
+## Figure 3.8: Cooperative Co-Evolutionary Optimization Loop
 
 <WorkflowDiagram 
   title="Cooperative Co-Evolutionary Optimization Loop" 
   figureNumber="Figure 3.8"
-  caption="Iterative co-evolutionary interaction between evolving attack strains and adaptive defense portfolios over successive generations."
-/>
+  status="Optimization Flowchart"
+  caption="Iterative CCEA-based search of candidate defense combinations using LLM-generated residual-severity estimates and a severity-based fitness function."
+>
+  <div style="width: 100%; max-width: 860px; padding: 1.5rem 0.5rem; display: flex; justify-content: center;">
+    <svg viewBox="0 0 860 680" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+      <defs>
+        <marker id="ccea-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--sl-color-accent)" />
+        </marker>
+        <marker id="ccea-tech-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--sl-color-tech)" />
+        </marker>
+        <marker id="ccea-purple-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--sl-color-purple)" />
+        </marker>
+      </defs>
+
+      {/* Step 1: Candidate Defense Pools */}
+      <rect x="250" y="20" width="360" height="48" rx="6" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
+      <text x="430" y="49" text-anchor="middle" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Candidate Defense Pools (P_1, P_2, ..., P_N)</text>
+
+      <line x1="430" y1="68" x2="430" y2="88" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#ccea-arrow)" />
+
+      {/* Step 2: Candidate Combination Generation */}
+      <rect x="250" y="90" width="360" height="48" rx="6" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
+      <text x="430" y="119" text-anchor="middle" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Candidate Combination Generation</text>
+
+      <line x1="430" y1="138" x2="430" y2="158" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#ccea-arrow)" />
+
+      {/* Step 3: Selection and Variation */}
+      <rect x="250" y="160" width="360" height="48" rx="6" fill="var(--academic-card-bg)" stroke="var(--sl-color-accent)" stroke-width="1.5" />
+      <text x="430" y="184" text-anchor="middle" fill="var(--sl-color-accent)" font-size="12" font-weight="600">Selection &amp; Variation</text>
+      <text x="430" y="198" text-anchor="middle" fill="var(--sl-color-gray-4)" font-size="10">Untried Selection | Exploration (p_e) | Best-so-far | Mutation (p_m)</text>
+
+      <line x1="430" y1="208" x2="430" y2="228" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#ccea-arrow)" />
+
+      {/* Step 4: Residual-Severity Evaluation */}
+      <rect x="250" y="230" width="360" height="48" rx="6" fill="var(--academic-card-bg)" stroke="var(--sl-color-purple)" stroke-width="1.5" />
+      <text x="430" y="259" text-anchor="middle" fill="var(--sl-color-purple)" font-size="12" font-weight="600">Residual-Severity Evaluation (External LLM)</text>
+
+      <line x1="430" y1="278" x2="430" y2="298" stroke="var(--sl-color-purple)" stroke-width="2" marker-end="url(#ccea-purple-arrow)" />
+
+      {/* Step 5: Fitness Calculation */}
+      <rect x="250" y="300" width="360" height="52" rx="6" fill="var(--academic-card-bg)" stroke="var(--sl-color-tech)" stroke-width="1.8" />
+      <text x="430" y="324" text-anchor="middle" fill="var(--sl-color-tech)" font-size="12" font-weight="700">Fitness Calculation: F(C) = (I_S - R_A) / I_S</text>
+      <text x="430" y="342" text-anchor="middle" fill="var(--sl-color-gray-3)" font-size="10">RMS normalized attack impact (I_S) vs. residual severity (R_A)</text>
+
+      <line x1="430" y1="352" x2="430" y2="372" stroke="var(--sl-color-tech)" stroke-width="2" marker-end="url(#ccea-tech-arrow)" />
+
+      {/* Step 6: Comparison with Best Candidate */}
+      <rect x="250" y="374" width="360" height="48" rx="6" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
+      <text x="430" y="403" text-anchor="middle" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Comparison with Best Candidate: F(C) &gt; F* + delta</text>
+
+      <line x1="430" y1="422" x2="430" y2="442" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#ccea-arrow)" />
+
+      {/* Step 7: Update Best Solution / No-Improvement Counter */}
+      <rect x="250" y="444" width="360" height="48" rx="6" fill="var(--academic-card-bg)" stroke="var(--academic-card-border)" stroke-width="1.5" />
+      <text x="430" y="473" text-anchor="middle" fill="var(--sl-color-gray-1)" font-size="12" font-weight="600">Update Best Solution (C*, F*) / Counter</text>
+
+      <line x1="430" y1="492" x2="430" y2="512" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#ccea-arrow)" />
+
+      {/* Step 8: Check Stopping Conditions Decision */}
+      <polygon points="430,515 570,555 430,595 290,555" fill="var(--academic-card-bg)" stroke="var(--sl-color-orange)" stroke-width="1.5" />
+      <text x="430" y="550" text-anchor="middle" fill="var(--sl-color-orange)" font-size="11" font-weight="700">Check Stopping Conditions</text>
+      <text x="430" y="567" text-anchor="middle" fill="var(--sl-color-gray-4)" font-size="9.5">Patience reached OR g &gt;= G_max?</text>
+
+      {/* Branch 1: Continue (Left / Loop back to Generation) */}
+      <line x1="290" y1="555" x2="160" y2="555" stroke="var(--sl-color-accent)" stroke-width="2" />
+      <line x1="160" y1="555" x2="160" y2="114" stroke="var(--sl-color-accent)" stroke-width="2" />
+      <line x1="160" y1="114" x2="245" y2="114" stroke="var(--sl-color-accent)" stroke-width="2" marker-end="url(#ccea-arrow)" />
+      <text x="210" y="545" text-anchor="middle" fill="var(--sl-color-accent)" font-size="11" font-weight="700">Continue (New Generation)</text>
+
+      {/* Branch 2: Stop (Down) */}
+      <line x1="430" y1="595" x2="430" y2="620" stroke="var(--sl-color-tech)" stroke-width="2" marker-end="url(#ccea-tech-arrow)" />
+      <text x="445" y="612" text-anchor="start" fill="var(--sl-color-tech)" font-size="10.5" font-weight="700">Stop</text>
+
+      {/* Final Step: Recommended Defense Combination */}
+      <rect x="230" y="625" width="400" height="45" rx="8" fill="var(--academic-card-bg)" stroke="var(--sl-color-tech)" stroke-width="2" />
+      <text x="430" y="652" text-anchor="middle" fill="var(--sl-color-tech)" font-size="13" font-weight="700">Recommended Defense Combination (C*)</text>
+    </svg>
+  </div>
+</WorkflowDiagram>
+
+---
 
 ## Optimal Defense Recommendation
 
-<div class="academic-placeholder-banner">
-  <div><strong>Section Placeholder:</strong> Translation of Pareto-optimal chromosomes into human-actionable policy profiles and SOC deployment guides.</div>
-</div>
+At the end of the search, the algorithm returns the best defense combination found according to the configured fitness function and stopping conditions. The output identifies the selected defensive mechanism for each relevant signature and its associated evaluation information.
 
-*Content to be supplied: Policy synthesis protocols mapping non-dominated solutions to endpoint security configurations.*
+The result is intended to support further analysis of which defensive mechanisms are promising for the evaluated attack scenario. It should not be interpreted as a guarantee of global optimality or complete prevention of all possible attack behaviors.
+
+The current optimization component selects from the defenses represented in the candidate pools. It does not independently verify that the selected controls are operationally compatible, deploy them to endpoints, or generate deployment policies automatically.
+
+Before operational use, the recommended combination would require additional validation based on:
+- Target deployment environment and endpoint compatibility.
+- Defense configuration, latency, and resource overhead.
+- Compatibility with legitimate user workflows and business applications.
+- Empirical accuracy and sensitivity of the underlying residual-severity estimates.
+
+---
+
+## Limitations
+
+The CCEA process depends on several factors:
+
+1. **Candidate Pool Quality:** The search is strictly bounded by the defense candidates mapped from D3FEND. If a relevant mitigation is absent from the pool, CCEA cannot select it.
+2. **Residual-Severity Sensitivity:** Errors or biases in the LLM-generated RS values directly affect the fitness calculation and may cause the optimizer to favor suboptimal defense choices.
+3. **Heuristic Search Ceiling:** Because CCEA evaluates a bounded subset of the combinatorial space (`G_max = 100`, `tau = 20`), it is not guaranteed to find a globally optimal defense portfolio.
+4. **Single Severity-Driven Objective:** Cost, deployment friction, system latency, and coverage breadth are not represented as separate Pareto objectives in the current fitness formula.
