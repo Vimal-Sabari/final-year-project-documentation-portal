@@ -56,7 +56,7 @@ For each experimental run, the following execution settings are documented:
 | **Temperature** | Configured sampling temperature for deterministic reasoning. |
 | **Top-p** | Configured nucleus sampling value, where supported. |
 | **Output Format** | Structured JSON schema specification. |
-| **Validation Method** | Schema parsing and severity-constraint checks ($0 \le RS \le IS$). |
+| **Validation Method** | Schema parsing and severity-constraint checks (`0 ≤ RS ≤ IS`). |
 | **Reproducibility Settings** | Random seeds and generation hyperparameters. |
 | **Execution Metadata** | Timestamp, inference latency, token usage, and API response status. |
 
@@ -75,7 +75,7 @@ The RS estimator receives structured information describing the observed behavio
 The attack-side input contains:
 
 - Signature name or canonical identifier.
-- Initial severity ($IS$).
+- Initial severity (*IS*).
 - Associated ATT&CK tactic and technique, when available.
 - Attack digital artifacts (e.g., target file types, memory spaces, registry hives).
 - Relevant API or behavioral evidence, when available and included in the configured input.
@@ -99,9 +99,11 @@ The initial severity establishes the strict upper bound for the residual-severit
 
 The accepted prediction must satisfy the bounding constraint:
 
-$$0 \le RS \le IS$$
+```text
+0 ≤ RS ≤ IS
+```
 
-where $RS$ is residual severity and $IS$ is initial severity. Both values must use the same severity scale defined by the project dataset (e.g., $[1, 35]$).
+where *RS* is residual severity and *IS* is initial severity. Both values must use the same severity scale defined by the project dataset (e.g., [1, 35]).
 
 ### 4. Structured Input Preparation
 
@@ -148,7 +150,7 @@ The request supplies the relevant fields for each evaluated case:
 
 - Signature name or identifier.
 - ATT&CK tactic and technique, if available.
-- Initial severity ($IS$).
+- Initial severity (*IS*).
 - Attack artifacts and relevant behavioral evidence.
 - Candidate defensive technique.
 - Defense artifacts and supplied defensive relationships or actions.
@@ -213,14 +215,14 @@ The validation pipeline enforces seven checks:
 
 1. **JSON Parsing:** Parse the response payload strictly as valid JSON.
 2. **Schema & Types:** Validate required fields and data types against the schema.
-3. **Integer Scale:** Confirm that residual severity is an integer on the project's allowed scale ($[1, 35]$).
-4. **Boundary Constraint:** Enforce $0 \le RS \le IS$.
+3. **Integer Scale:** Confirm that residual severity is an integer on the project's allowed scale ([1, 35]).
+4. **Boundary Constraint:** Enforce `0 ≤ RS ≤ IS`.
 5. **Categorical Consistency:** Validate categorical labels against allowed values (`NONE`, `PARTIAL`, `FULL`).
 6. **Provenance Check:** Confirm that referenced defense information is consistent with the supplied input.
 7. **Error Logging:** Record invalid outputs, provider errors, and failed correction attempts.
 
 :::caution[No Silent Clamping]
-If a response is invalid, the system may request a limited correction according to the experimental protocol. It must **not** silently clamp an out-of-bounds prediction (e.g., rounding an invalid $RS > IS$ down to $IS$), as doing so would conceal model reasoning failures.
+If a response is invalid, the system may request a limited correction according to the experimental protocol. It must **not** silently clamp an out-of-bounds prediction (e.g., rounding an invalid `RS > IS` down to `IS`), as doing so would conceal model reasoning failures.
 :::
 
 Successful structural validation establishes that the output conforms to the schema; it does not prove that the predicted severity is empirically correct.
@@ -269,4 +271,4 @@ A malware sample may exhibit different behavior outside the analyzed sandbox env
 Ground-truth RS labels may involve expert judgment and inherent ambiguity. Evaluation results must document how reference labels were established and the severity scale used.
 
 ### 6. Limits of Output Validation
-Schema validation and severity constraints ensure that a prediction is structurally valid and within the allowed range ($0 \le RS \le IS$). They do not establish that the prediction reflects the true operational effectiveness of a defensive mechanism.
+Schema validation and severity constraints ensure that a prediction is structurally valid and within the allowed range (`0 ≤ RS ≤ IS`). They do not establish that the prediction reflects the true operational effectiveness of a defensive mechanism.

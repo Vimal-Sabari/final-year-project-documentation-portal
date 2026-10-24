@@ -39,7 +39,7 @@ The purpose of this stage is to support the comparison of attack signatures. It 
 
 ## Initial Severity Assignment
 
-The first pass of the impact-quantification algorithm assigns each signature an initial score based on its malware-analysis severity value, denoted as $V_x$.
+The first pass of the impact-quantification algorithm assigns each signature an initial score based on its malware-analysis severity value, denoted as *V<sub>x</sub>*.
 
 The algorithm uses four severity bands:
 
@@ -102,11 +102,11 @@ Co-occurrence indicates that signatures appear together in the analyzed data; it
 
 The second pass refines the initial signature scores using mutual-information-based information derived from signature co-occurrence.
 
-For a signature $S_x$, the algorithm examines its relationship with the remaining signatures triggered by the relevant sample. Mutual-information values are aggregated across signature pairs to calculate a weight denoted as $W_x$.
+For a signature *S<sub>x</sub>*, the algorithm examines its relationship with the remaining signatures triggered by the relevant sample. Mutual-information values are aggregated across signature pairs to calculate a weight denoted as *W<sub>x</sub>*.
 
 The resulting weight is compared with a dynamic threshold:
 
-- **If $W_x$ exceeds the threshold:** The signature score is updated according to the implemented refinement procedure.
+- **If *W<sub>x</sub>* exceeds the threshold:** The signature score is updated according to the implemented refinement procedure.
 - **Otherwise:** The existing score is retained.
 
 This process allows the algorithm to consider information from related behavioral patterns rather than relying exclusively on the initial severity value.
@@ -118,8 +118,8 @@ The method follows seven structured steps:
 1. Retrieve the initial impact scores assigned during the first pass.
 2. Identify the relevant signature co-occurrence information from the repository.
 3. Calculate the mutual-information values used by the implementation.
-4. Aggregate the relevant values to obtain $W_x$ for each signature.
-5. Compare $W_x$ with the configured dynamic threshold.
+4. Aggregate the relevant values to obtain *W<sub>x</sub>* for each signature.
+5. Compare *W<sub>x</sub>* with the configured dynamic threshold.
 6. Apply the implemented score-update procedure when the threshold condition is met; otherwise, retain the existing score.
 7. Return the refined signature impact scores.
 
@@ -136,11 +136,11 @@ The algorithm receives the signature information and repository-level evidence r
 ### Inputs
 
 - **Behavioral signatures:** The signatures extracted from the Cuckoo Sandbox analysis reports.
-- **Initial severity values ($V_x$):** Malware-analysis severity scores used during initial placement.
+- **Initial severity values (*V<sub>x</sub>*):** Malware-analysis severity scores used during initial placement.
 - **Execution records:** Information identifying which signatures were triggered by each analyzed sample.
 - **Signature Co-occurrence Count (SCC):** Repository-level information describing the co-occurrence of signatures.
 - **Ransomware knowledge base:** Existing behavioral information used by the refinement method.
-- **Scoring configuration:** The configured score range $[1, 35]$, severity bands (B1–B4), and threshold-related parameters.
+- **Scoring configuration:** The configured score range [1, 35], severity bands (B1–B4), and threshold-related parameters.
 
 ### Outputs
 
