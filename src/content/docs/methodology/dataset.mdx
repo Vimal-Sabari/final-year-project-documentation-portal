@@ -5,7 +5,6 @@ description: "Empirical malware dataset curation, sample validation, SHA-256 ded
 
 import PageIntro from '../../../components/PageIntro.astro';
 import DataTable from '../../../components/DataTable.astro';
-import FigurePlaceholder from '../../../components/FigurePlaceholder.astro';
 
 <PageIntro 
   subtitle="Empirical malware sample curation, VirusTotal authenticity validation, SHA-256 deduplication, and JSON report metadata extraction." 
@@ -161,19 +160,3 @@ The following table summarizes the currently documented information:
 <p style="font-size: 0.85rem; color: var(--sl-color-gray-3); margin-top: 0.75rem;">
   Additional statistics, including family-level sample counts, execution-success rates, average triggered signatures per sample, and architecture distributions, can be included after they have been calculated from the actual dataset and analysis reports.
 </p>
-
----
-
-## Empirical Distribution Visualizations
-
-<FigurePlaceholder 
-  figureId="3.4" 
-  title="Malware Sample Distribution and Behavioral Signature Statistics" 
-  caption="A chart showing the actual distribution of collected samples by malware class or family, together with a chart of triggered-signature counts, if these statistics are available."
-/>
-
-<div class="academic-callout" style="margin: 1.5rem 0; padding: 1rem 1.25rem; border-left: 4px solid var(--sl-color-accent); background: var(--academic-card-bg); border: 1px solid var(--academic-card-border); border-left-width: 4px; border-left-color: var(--sl-color-accent); border-radius: 6px;">
-  <p style="margin: 0; font-size: 0.85rem; color: var(--sl-color-gray-2); line-height: 1.55;">
-    <strong>Scientific Integrity Note:</strong> Figure 3.4 will be generated directly from the project's actual dataset. In accordance with academic reporting guidelines, no sample counts or family distributions are estimated or fabricated.
-  </p>
-</div>
